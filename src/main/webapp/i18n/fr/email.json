@@ -1,0 +1,29 @@
+{
+  "sgpcApp": {
+    "email": {
+      "home": {
+        "title": "Emails",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Email",
+        "createOrEditLabel": "Créer ou éditer un Email",
+        "notFound": "Aucun Email trouvé"
+      },
+      "created": "Un nouveau Email a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Email avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Email avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Email {{ id }} ?"
+      },
+      "detail": {
+        "title": "Email"
+      },
+      "id": "ID",
+      "objet": "Objet",
+      "contenu": "Contenu",
+      "destinataire": "Destinataire",
+      "dateEnvoi": "Date Envoi",
+      "colisage": "Colisage",
+      "personne": "Personne"
+    }
+  }
+}

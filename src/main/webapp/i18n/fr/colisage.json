@@ -1,0 +1,30 @@
+{
+  "sgpcApp": {
+    "colisage": {
+      "home": {
+        "title": "Colisages",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Colisage",
+        "createOrEditLabel": "Créer ou éditer un Colisage",
+        "notFound": "Aucun Colisage trouvé"
+      },
+      "created": "Un nouveau Colisage a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Colisage avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Colisage avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Colisage {{ id }} ?"
+      },
+      "detail": {
+        "title": "Colisage"
+      },
+      "id": "ID",
+      "destination": "Destination",
+      "canal": "Canal",
+      "recuPar": "Recu Par",
+      "estRecu": "Est Recu",
+      "dateCreation": "Date Creation",
+      "email": "Email",
+      "personne": "Personne"
+    }
+  }
+}

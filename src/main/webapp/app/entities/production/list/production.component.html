@@ -1,0 +1,207 @@
+<div>
+  <h2 id="page-heading" data-cy="ProductionHeading">
+    <span jhiTranslate="sgpcApp.production.home.title">Productions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="sgpcApp.production.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-production"
+        [routerLink]="['/production/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="sgpcApp.production.home.createLabel">Créer un nouveau Production</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="productions?.length === 0">
+    <span jhiTranslate="sgpcApp.production.home.notFound">Aucun Production trouvé</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="productions && productions.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="libelle">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.production.libelle">Libelle</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fichier">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.production.fichier">Fichier</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="finish">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.production.finish">Finish</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="etat">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.production.etat">Etat</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="validerPar">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.production.validerPar">Valider Par</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dateDepot">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.production.dateDepot">Date Depot</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dateDebut">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.production.dateDebut">Date Debut</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dateFin">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.production.dateFin">Date Fin</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dateValider">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.production.dateValider">Date Valider</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dateOuvert">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.production.dateOuvert">Date Ouvert</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dateCreation">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.production.dateCreation">Date Creation</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="personne.id">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.production.personne">Personne</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="producteur.id">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.production.producteur">Producteur</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="receveur.id">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.production.receveur">Receveur</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let production of productions; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/production', production.id, 'view']">{{ production.id }}</a>
+          </td>
+          <td>{{ production.libelle }}</td>
+          <td>
+            <a
+              *ngIf="production.fichier"
+              (click)="openFile(production.fichier, production.fichierContentType)"
+              jhiTranslate="entity.action.open"
+              >Ouvrir</a
+            >
+            <span *ngIf="production.fichier">{{ production.fichierContentType }}, {{ byteSize(production.fichier) }}</span>
+          </td>
+          <td>{{ production.finish }}</td>
+          <td jhiTranslate="{{ 'sgpcApp.ETATPRODUCTION.' + production.etat }}">{{ production.etat }}</td>
+          <td>{{ production.validerPar }}</td>
+          <td>{{ production.dateDepot | formatMediumDate }}</td>
+          <td>{{ production.dateDebut | formatMediumDate }}</td>
+          <td>{{ production.dateFin | formatMediumDate }}</td>
+          <td>{{ production.dateValider | formatMediumDatetime }}</td>
+          <td>{{ production.dateOuvert | formatMediumDate }}</td>
+          <td>{{ production.dateCreation | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="production.personne">
+              <a [routerLink]="['/personne', production.personne.id, 'view']">{{ production.personne.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="production.producteur">
+              <a [routerLink]="['/personne', production.producteur.id, 'view']">{{ production.producteur.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="production.receveur">
+              <a [routerLink]="['/personne', production.receveur.id, 'view']">{{ production.receveur.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <a [routerLink]="['/production', production.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Voir</span>
+              </a>
+
+              <a [routerLink]="['/production', production.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editer</span>
+              </a>
+
+              <button type="submit" (click)="delete(production)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Supprimer</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="productions && productions.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

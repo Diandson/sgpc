@@ -1,0 +1,74 @@
+entity Filiale {
+    denomination String
+    sigle String
+}
+
+enum ETATPRODUCTION {
+    ATTENTE, EN_COURS, VALIDATION, COURRIER, VERIFICATION, TERMINER
+}
+
+entity Personne {
+    nom String
+    prenom String
+    titre String
+    numeroDocument String
+    telephone String
+}
+
+entity Production {
+    libelle String
+    fichier AnyBlob
+    finish Boolean
+    etat ETATPRODUCTION
+    validerPar String
+    dateDepot LocalDate
+    dateDebut LocalDate
+    dateFin LocalDate
+    dateValider ZonedDateTime
+    dateOuvert LocalDate
+    dateCreation ZonedDateTime
+}
+
+entity Colisage {
+    destination String
+    canal String
+    recuPar String
+    estRecu Boolean
+    dateCreation ZonedDateTime
+}
+
+entity Stockage {
+    denomination String
+    code String
+    quantite String
+    modifierPar String
+    dateCreation ZonedDateTime
+}
+
+entity Email {
+    objet String
+    contenu String
+    destinataire String
+    dateEnvoi ZonedDateTime
+}
+
+//relationship OneToOne {
+////    Personne{user} to User
+////}
+
+relationship OneToMany{
+    Filiale to Personne{filiale}
+    Personne to Production{personne}
+//    Personne to Production{producteur}
+//    Personne to Production{validateur}
+//    Personne to Production{recepteur}
+    Personne to Stockage{personne}
+    Personne to Colisage{personne}
+    Colisage to Email{colisage}
+    Personne to Email{personne}
+}
+
+
+dto * with mapstruct
+paginate * with pagination
+service * with serviceClass

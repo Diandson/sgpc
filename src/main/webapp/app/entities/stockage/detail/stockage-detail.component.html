@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="stockage">
+      <h2 data-cy="stockageDetailsHeading"><span jhiTranslate="sgpcApp.stockage.detail.title">Stockage</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ stockage.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.stockage.denomination">Denomination</span></dt>
+        <dd>
+          <span>{{ stockage.denomination }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.stockage.code">Code</span></dt>
+        <dd>
+          <span>{{ stockage.code }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.stockage.quantite">Quantite</span></dt>
+        <dd>
+          <span>{{ stockage.quantite }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.stockage.modifierPar">Modifier Par</span></dt>
+        <dd>
+          <span>{{ stockage.modifierPar }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.stockage.dateCreation">Date Creation</span></dt>
+        <dd>
+          <span>{{ stockage.dateCreation | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.stockage.personne">Personne</span></dt>
+        <dd>
+          <div *ngIf="stockage.personne">
+            <a [routerLink]="['/personne', stockage.personne.id, 'view']">{{ stockage.personne.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+      </button>
+
+      <button type="button" [routerLink]="['/stockage', stockage.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+      </button>
+    </div>
+  </div>
+</div>

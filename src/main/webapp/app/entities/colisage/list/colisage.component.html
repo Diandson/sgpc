@@ -1,0 +1,135 @@
+<div>
+  <h2 id="page-heading" data-cy="ColisageHeading">
+    <span jhiTranslate="sgpcApp.colisage.home.title">Colisages</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="sgpcApp.colisage.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-colisage"
+        [routerLink]="['/colisage/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="sgpcApp.colisage.home.createLabel">Créer un nouveau Colisage</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="colisages?.length === 0">
+    <span jhiTranslate="sgpcApp.colisage.home.notFound">Aucun Colisage trouvé</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="colisages && colisages.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="destination">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.colisage.destination">Destination</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="canal">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.colisage.canal">Canal</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="recuPar">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.colisage.recuPar">Recu Par</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="estRecu">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.colisage.estRecu">Est Recu</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dateCreation">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.colisage.dateCreation">Date Creation</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="personne.id">
+            <div class="d-flex">
+              <span jhiTranslate="sgpcApp.colisage.personne">Personne</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let colisage of colisages; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/colisage', colisage.id, 'view']">{{ colisage.id }}</a>
+          </td>
+          <td>{{ colisage.destination }}</td>
+          <td>{{ colisage.canal }}</td>
+          <td>{{ colisage.recuPar }}</td>
+          <td>{{ colisage.estRecu }}</td>
+          <td>{{ colisage.dateCreation | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="colisage.personne">
+              <a [routerLink]="['/personne', colisage.personne.id, 'view']">{{ colisage.personne.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <a [routerLink]="['/colisage', colisage.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Voir</span>
+              </a>
+
+              <a [routerLink]="['/colisage', colisage.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editer</span>
+              </a>
+
+              <button type="submit" (click)="delete(colisage)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Supprimer</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="colisages && colisages.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

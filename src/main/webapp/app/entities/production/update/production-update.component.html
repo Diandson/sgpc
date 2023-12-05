@@ -1,0 +1,248 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-production-heading" data-cy="ProductionCreateUpdateHeading" jhiTranslate="sgpcApp.production.home.createOrEditLabel">
+        Créer ou éditer un Production
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.production.libelle" for="field_libelle">Libelle</label>
+          <input type="text" class="form-control" name="libelle" id="field_libelle" data-cy="libelle" formControlName="libelle" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.production.fichier" for="field_fichier">Fichier</label>
+          <div>
+            <div *ngIf="editForm.get('fichier')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-start"
+                (click)="openFile(editForm.get('fichier')!.value!, editForm.get('fichierContentType')!.value!)"
+                jhiTranslate="entity.action.open"
+                >Ouvrir</a
+              ><br />
+              <span class="pull-start"
+                >{{ editForm.get('fichierContentType')!.value }}, {{ byteSize(editForm.get('fichier')!.value!) }}</span
+              >
+              <button
+                type="button"
+                (click)="editForm.patchValue({ fichier: undefined, fichierContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_fichier"
+              data-cy="fichier"
+              (change)="setFileData($event, 'fichier', false)"
+              jhiTranslate="entity.action.addblob"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="fichier" id="field_fichier" data-cy="fichier" formControlName="fichier" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="fichierContentType"
+            id="field_fichierContentType"
+            formControlName="fichierContentType"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.production.finish" for="field_finish">Finish</label>
+          <input type="checkbox" class="form-check" name="finish" id="field_finish" data-cy="finish" formControlName="finish" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.production.etat" for="field_etat">Etat</label>
+          <select class="form-control" name="etat" formControlName="etat" id="field_etat" data-cy="etat">
+            <option [ngValue]="null">{{ 'sgpcApp.ETATPRODUCTION.null' | translate }}</option>
+            <option *ngFor="let eTATPRODUCTION of eTATPRODUCTIONValues" [value]="eTATPRODUCTION">
+              {{ 'sgpcApp.ETATPRODUCTION.' + eTATPRODUCTION | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.production.validerPar" for="field_validerPar">Valider Par</label>
+          <input
+            type="text"
+            class="form-control"
+            name="validerPar"
+            id="field_validerPar"
+            data-cy="validerPar"
+            formControlName="validerPar"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.production.dateDepot" for="field_dateDepot">Date Depot</label>
+          <div class="input-group">
+            <input
+              id="field_dateDepot"
+              data-cy="dateDepot"
+              type="text"
+              class="form-control"
+              name="dateDepot"
+              ngbDatepicker
+              #dateDepotDp="ngbDatepicker"
+              formControlName="dateDepot"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateDepotDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.production.dateDebut" for="field_dateDebut">Date Debut</label>
+          <div class="input-group">
+            <input
+              id="field_dateDebut"
+              data-cy="dateDebut"
+              type="text"
+              class="form-control"
+              name="dateDebut"
+              ngbDatepicker
+              #dateDebutDp="ngbDatepicker"
+              formControlName="dateDebut"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateDebutDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.production.dateFin" for="field_dateFin">Date Fin</label>
+          <div class="input-group">
+            <input
+              id="field_dateFin"
+              data-cy="dateFin"
+              type="text"
+              class="form-control"
+              name="dateFin"
+              ngbDatepicker
+              #dateFinDp="ngbDatepicker"
+              formControlName="dateFin"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateFinDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.production.dateValider" for="field_dateValider">Date Valider</label>
+          <div class="d-flex">
+            <input
+              id="field_dateValider"
+              data-cy="dateValider"
+              type="datetime-local"
+              class="form-control"
+              name="dateValider"
+              formControlName="dateValider"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.production.dateOuvert" for="field_dateOuvert">Date Ouvert</label>
+          <div class="input-group">
+            <input
+              id="field_dateOuvert"
+              data-cy="dateOuvert"
+              type="text"
+              class="form-control"
+              name="dateOuvert"
+              ngbDatepicker
+              #dateOuvertDp="ngbDatepicker"
+              formControlName="dateOuvert"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateOuvertDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.production.dateCreation" for="field_dateCreation">Date Creation</label>
+          <div class="d-flex">
+            <input
+              id="field_dateCreation"
+              data-cy="dateCreation"
+              type="datetime-local"
+              class="form-control"
+              name="dateCreation"
+              formControlName="dateCreation"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.production.personne" for="field_personne">Personne</label>
+          <select
+            class="form-control"
+            id="field_personne"
+            data-cy="personne"
+            name="personne"
+            formControlName="personne"
+            [compareWith]="comparePersonne"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="personneOption" *ngFor="let personneOption of personnesSharedCollection">{{ personneOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.production.producteur" for="field_producteur">Producteur</label>
+          <select
+            class="form-control"
+            id="field_producteur"
+            data-cy="producteur"
+            name="producteur"
+            formControlName="producteur"
+            [compareWith]="comparePersonne"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="personneOption" *ngFor="let personneOption of personnesSharedCollection">{{ personneOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.production.receveur" for="field_receveur">Receveur</label>
+          <select
+            class="form-control"
+            id="field_receveur"
+            data-cy="receveur"
+            name="receveur"
+            formControlName="receveur"
+            [compareWith]="comparePersonne"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="personneOption" *ngFor="let personneOption of personnesSharedCollection">{{ personneOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

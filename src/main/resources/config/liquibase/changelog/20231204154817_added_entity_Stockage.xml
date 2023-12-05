@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity Stockage.
+    -->
+    <changeSet id="20231204154817-1" author="jhipster">
+        <createTable tableName="stockage">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="denomination" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="code" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="quantite" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="modifier_par" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_creation" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="personne_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="stockage" columnName="date_creation" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <!--
+        Load sample data generated with Faker.js
+        - This data can be easily edited using a CSV editor (or even MS Excel) and
+          is located in the 'src/main/resources/config/liquibase/fake-data' directory
+        - By default this data is applied when running with the JHipster 'dev' profile.
+          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
+          Spring Boot configuration key.
+    -->
+    <changeSet id="20231204154817-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/stockage.csv"
+                  separator=";"
+                  tableName="stockage"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="denomination" type="string"/>
+            <column name="code" type="string"/>
+            <column name="quantite" type="string"/>
+            <column name="modifier_par" type="string"/>
+            <column name="date_creation" type="date"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

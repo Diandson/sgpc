@@ -1,0 +1,77 @@
+{
+  "applications": "*",
+  "changelogDate": "20231204154517",
+  "dto": "mapstruct",
+  "entityTableName": "personne",
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "prenom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "titre",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numeroDocument",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telephone",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Personne",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "production",
+      "otherEntityRelationshipName": "personne",
+      "relationshipName": "production",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "stockage",
+      "otherEntityRelationshipName": "personne",
+      "relationshipName": "stockage",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "colisage",
+      "otherEntityRelationshipName": "personne",
+      "relationshipName": "colisage",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "email",
+      "otherEntityRelationshipName": "personne",
+      "relationshipName": "email",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "filiale",
+      "relationshipName": "filiale",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "id": false,
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "personne",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

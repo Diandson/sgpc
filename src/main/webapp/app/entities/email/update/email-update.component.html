@@ -1,0 +1,101 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-email-heading" data-cy="EmailCreateUpdateHeading" jhiTranslate="sgpcApp.email.home.createOrEditLabel">
+        Créer ou éditer un Email
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.email.objet" for="field_objet">Objet</label>
+          <input type="text" class="form-control" name="objet" id="field_objet" data-cy="objet" formControlName="objet" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.email.contenu" for="field_contenu">Contenu</label>
+          <input type="text" class="form-control" name="contenu" id="field_contenu" data-cy="contenu" formControlName="contenu" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.email.destinataire" for="field_destinataire">Destinataire</label>
+          <input
+            type="text"
+            class="form-control"
+            name="destinataire"
+            id="field_destinataire"
+            data-cy="destinataire"
+            formControlName="destinataire"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.email.dateEnvoi" for="field_dateEnvoi">Date Envoi</label>
+          <div class="d-flex">
+            <input
+              id="field_dateEnvoi"
+              data-cy="dateEnvoi"
+              type="datetime-local"
+              class="form-control"
+              name="dateEnvoi"
+              formControlName="dateEnvoi"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.email.colisage" for="field_colisage">Colisage</label>
+          <select
+            class="form-control"
+            id="field_colisage"
+            data-cy="colisage"
+            name="colisage"
+            formControlName="colisage"
+            [compareWith]="compareColisage"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="colisageOption" *ngFor="let colisageOption of colisagesSharedCollection">{{ colisageOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.email.personne" for="field_personne">Personne</label>
+          <select
+            class="form-control"
+            id="field_personne"
+            data-cy="personne"
+            name="personne"
+            formControlName="personne"
+            [compareWith]="comparePersonne"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="personneOption" *ngFor="let personneOption of personnesSharedCollection">{{ personneOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

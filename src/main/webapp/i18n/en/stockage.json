@@ -1,0 +1,29 @@
+{
+  "sgpcApp": {
+    "stockage": {
+      "home": {
+        "title": "Stockages",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Stockage",
+        "createOrEditLabel": "Create or edit a Stockage",
+        "notFound": "No Stockages found"
+      },
+      "created": "A new Stockage is created with identifier {{ param }}",
+      "updated": "A Stockage is updated with identifier {{ param }}",
+      "deleted": "A Stockage is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Stockage {{ id }}?"
+      },
+      "detail": {
+        "title": "Stockage"
+      },
+      "id": "ID",
+      "denomination": "Denomination",
+      "code": "Code",
+      "quantite": "Quantite",
+      "modifierPar": "Modifier Par",
+      "dateCreation": "Date Creation",
+      "personne": "Personne"
+    }
+  }
+}

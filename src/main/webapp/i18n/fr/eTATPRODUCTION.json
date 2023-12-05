@@ -1,0 +1,13 @@
+{
+  "sgpcApp": {
+    "ETATPRODUCTION": {
+      "null": "",
+      "ATTENTE": "ATTENTE",
+      "EN_COURS": "EN_COURS",
+      "VALIDATION": "VALIDATION",
+      "COURRIER": "COURRIER",
+      "VERIFICATION": "VERIFICATION",
+      "TERMINER": "TERMINER"
+    }
+  }
+}

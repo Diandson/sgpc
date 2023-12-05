@@ -1,0 +1,93 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="production">
+      <h2 data-cy="productionDetailsHeading"><span jhiTranslate="sgpcApp.production.detail.title">Production</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ production.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.production.libelle">Libelle</span></dt>
+        <dd>
+          <span>{{ production.libelle }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.production.fichier">Fichier</span></dt>
+        <dd>
+          <div *ngIf="production.fichier">
+            <a (click)="openFile(production.fichier, production.fichierContentType)" jhiTranslate="entity.action.open">Ouvrir</a>
+            {{ production.fichierContentType }}, {{ byteSize(production.fichier) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.production.finish">Finish</span></dt>
+        <dd>
+          <span>{{ production.finish }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.production.etat">Etat</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'sgpcApp.ETATPRODUCTION.' + production.etat }}">{{ production.etat }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.production.validerPar">Valider Par</span></dt>
+        <dd>
+          <span>{{ production.validerPar }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.production.dateDepot">Date Depot</span></dt>
+        <dd>
+          <span>{{ production.dateDepot | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.production.dateDebut">Date Debut</span></dt>
+        <dd>
+          <span>{{ production.dateDebut | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.production.dateFin">Date Fin</span></dt>
+        <dd>
+          <span>{{ production.dateFin | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.production.dateValider">Date Valider</span></dt>
+        <dd>
+          <span>{{ production.dateValider | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.production.dateOuvert">Date Ouvert</span></dt>
+        <dd>
+          <span>{{ production.dateOuvert | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.production.dateCreation">Date Creation</span></dt>
+        <dd>
+          <span>{{ production.dateCreation | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.production.personne">Personne</span></dt>
+        <dd>
+          <div *ngIf="production.personne">
+            <a [routerLink]="['/personne', production.personne.id, 'view']">{{ production.personne.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.production.producteur">Producteur</span></dt>
+        <dd>
+          <div *ngIf="production.producteur">
+            <a [routerLink]="['/personne', production.producteur.id, 'view']">{{ production.producteur.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.production.receveur">Receveur</span></dt>
+        <dd>
+          <div *ngIf="production.receveur">
+            <a [routerLink]="['/personne', production.receveur.id, 'view']">{{ production.receveur.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+      </button>
+
+      <button type="button" [routerLink]="['/production', production.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+      </button>
+    </div>
+  </div>
+</div>

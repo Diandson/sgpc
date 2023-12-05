@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="email">
+      <h2 data-cy="emailDetailsHeading"><span jhiTranslate="sgpcApp.email.detail.title">Email</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ email.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.email.objet">Objet</span></dt>
+        <dd>
+          <span>{{ email.objet }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.email.contenu">Contenu</span></dt>
+        <dd>
+          <span>{{ email.contenu }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.email.destinataire">Destinataire</span></dt>
+        <dd>
+          <span>{{ email.destinataire }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.email.dateEnvoi">Date Envoi</span></dt>
+        <dd>
+          <span>{{ email.dateEnvoi | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.email.colisage">Colisage</span></dt>
+        <dd>
+          <div *ngIf="email.colisage">
+            <a [routerLink]="['/colisage', email.colisage.id, 'view']">{{ email.colisage.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.email.personne">Personne</span></dt>
+        <dd>
+          <div *ngIf="email.personne">
+            <a [routerLink]="['/personne', email.personne.id, 'view']">{{ email.personne.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+      </button>
+
+      <button type="button" [routerLink]="['/email', email.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+      </button>
+    </div>
+  </div>
+</div>

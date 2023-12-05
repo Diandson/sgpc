@@ -1,0 +1,29 @@
+{
+  "sgpcApp": {
+    "stockage": {
+      "home": {
+        "title": "Stockages",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Stockage",
+        "createOrEditLabel": "Créer ou éditer un Stockage",
+        "notFound": "Aucun Stockage trouvé"
+      },
+      "created": "Un nouveau Stockage a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Stockage avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Stockage avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Stockage {{ id }} ?"
+      },
+      "detail": {
+        "title": "Stockage"
+      },
+      "id": "ID",
+      "denomination": "Denomination",
+      "code": "Code",
+      "quantite": "Quantite",
+      "modifierPar": "Modifier Par",
+      "dateCreation": "Date Creation",
+      "personne": "Personne"
+    }
+  }
+}

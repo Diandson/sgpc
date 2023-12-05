@@ -1,0 +1,36 @@
+{
+  "sgpcApp": {
+    "personne": {
+      "home": {
+        "title": "Personnes",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Personne",
+        "createOrEditLabel": "Créer ou éditer un Personne",
+        "notFound": "Aucun Personne trouvé"
+      },
+      "created": "Un nouveau Personne a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Personne avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Personne avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Personne {{ id }} ?"
+      },
+      "detail": {
+        "title": "Personne"
+      },
+      "id": "ID",
+      "nom": "Nom",
+      "prenom": "Prenom",
+      "titre": "Titre",
+      "numeroDocument": "Numero Document",
+      "telephone": "Telephone",
+      "production": "Production",
+      "stockage": "Stockage",
+      "colisage": "Colisage",
+      "email": "Email",
+      "filiale": "Filiale",
+      "user": "User",
+      "producteur": "Producteur",
+      "receveur": "Receveur"
+    }
+  }
+}

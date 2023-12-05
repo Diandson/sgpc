@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="colisage">
+      <h2 data-cy="colisageDetailsHeading"><span jhiTranslate="sgpcApp.colisage.detail.title">Colisage</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ colisage.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.colisage.destination">Destination</span></dt>
+        <dd>
+          <span>{{ colisage.destination }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.colisage.canal">Canal</span></dt>
+        <dd>
+          <span>{{ colisage.canal }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.colisage.recuPar">Recu Par</span></dt>
+        <dd>
+          <span>{{ colisage.recuPar }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.colisage.estRecu">Est Recu</span></dt>
+        <dd>
+          <span>{{ colisage.estRecu }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.colisage.dateCreation">Date Creation</span></dt>
+        <dd>
+          <span>{{ colisage.dateCreation | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="sgpcApp.colisage.personne">Personne</span></dt>
+        <dd>
+          <div *ngIf="colisage.personne">
+            <a [routerLink]="['/personne', colisage.personne.id, 'view']">{{ colisage.personne.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+      </button>
+
+      <button type="button" [routerLink]="['/colisage', colisage.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+      </button>
+    </div>
+  </div>
+</div>

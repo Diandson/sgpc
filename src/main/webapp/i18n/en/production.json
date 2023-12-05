@@ -1,0 +1,37 @@
+{
+  "sgpcApp": {
+    "production": {
+      "home": {
+        "title": "Productions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Production",
+        "createOrEditLabel": "Create or edit a Production",
+        "notFound": "No Productions found"
+      },
+      "created": "A new Production is created with identifier {{ param }}",
+      "updated": "A Production is updated with identifier {{ param }}",
+      "deleted": "A Production is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Production {{ id }}?"
+      },
+      "detail": {
+        "title": "Production"
+      },
+      "id": "ID",
+      "libelle": "Libelle",
+      "fichier": "Fichier",
+      "finish": "Finish",
+      "etat": "Etat",
+      "validerPar": "Valider Par",
+      "dateDepot": "Date Depot",
+      "dateDebut": "Date Debut",
+      "dateFin": "Date Fin",
+      "dateValider": "Date Valider",
+      "dateOuvert": "Date Ouvert",
+      "dateCreation": "Date Creation",
+      "personne": "Personne",
+      "producteur": "Producteur",
+      "receveur": "Receveur"
+    }
+  }
+}

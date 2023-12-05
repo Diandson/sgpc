@@ -1,0 +1,47 @@
+{
+  "applications": "*",
+  "changelogDate": "20231204154717",
+  "dto": "mapstruct",
+  "entityTableName": "colisage",
+  "fields": [
+    {
+      "fieldName": "destination",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "canal",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "recuPar",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "estRecu",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "dateCreation",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "name": "Colisage",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "email",
+      "otherEntityRelationshipName": "colisage",
+      "relationshipName": "email",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "personne",
+      "relationshipName": "personne",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

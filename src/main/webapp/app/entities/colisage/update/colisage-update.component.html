@@ -1,0 +1,91 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-colisage-heading" data-cy="ColisageCreateUpdateHeading" jhiTranslate="sgpcApp.colisage.home.createOrEditLabel">
+        Créer ou éditer un Colisage
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.colisage.destination" for="field_destination">Destination</label>
+          <input
+            type="text"
+            class="form-control"
+            name="destination"
+            id="field_destination"
+            data-cy="destination"
+            formControlName="destination"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.colisage.canal" for="field_canal">Canal</label>
+          <input type="text" class="form-control" name="canal" id="field_canal" data-cy="canal" formControlName="canal" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.colisage.recuPar" for="field_recuPar">Recu Par</label>
+          <input type="text" class="form-control" name="recuPar" id="field_recuPar" data-cy="recuPar" formControlName="recuPar" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.colisage.estRecu" for="field_estRecu">Est Recu</label>
+          <input type="checkbox" class="form-check" name="estRecu" id="field_estRecu" data-cy="estRecu" formControlName="estRecu" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.colisage.dateCreation" for="field_dateCreation">Date Creation</label>
+          <div class="d-flex">
+            <input
+              id="field_dateCreation"
+              data-cy="dateCreation"
+              type="datetime-local"
+              class="form-control"
+              name="dateCreation"
+              formControlName="dateCreation"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sgpcApp.colisage.personne" for="field_personne">Personne</label>
+          <select
+            class="form-control"
+            id="field_personne"
+            data-cy="personne"
+            name="personne"
+            formControlName="personne"
+            [compareWith]="comparePersonne"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="personneOption" *ngFor="let personneOption of personnesSharedCollection">{{ personneOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

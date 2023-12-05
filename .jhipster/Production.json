@@ -1,0 +1,82 @@
+{
+  "applications": "*",
+  "changelogDate": "20231204154617",
+  "dto": "mapstruct",
+  "entityTableName": "production",
+  "fields": [
+    {
+      "fieldName": "libelle",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fichier",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "finish",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "etat",
+      "fieldType": "ETATPRODUCTION",
+      "fieldValues": "ATTENTE,EN_COURS,VALIDATION,COURRIER,VERIFICATION,TERMINER"
+    },
+    {
+      "fieldName": "validerPar",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateDepot",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateDebut",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateFin",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateValider",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "dateOuvert",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateCreation",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "name": "Production",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "personne",
+      "relationshipName": "personne",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "personne",
+      "otherEntityRelationshipName": "producteur",
+      "relationshipName": "producteur",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "personne",
+      "otherEntityRelationshipName": "receveur",
+      "relationshipName": "receveur",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

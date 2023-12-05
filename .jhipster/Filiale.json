@@ -1,0 +1,29 @@
+{
+  "applications": "*",
+  "changelogDate": "20231204154417",
+  "dto": "mapstruct",
+  "entityTableName": "filiale",
+  "fields": [
+    {
+      "fieldName": "denomination",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sigle",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Filiale",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "personne",
+      "otherEntityRelationshipName": "filiale",
+      "relationshipName": "personne",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

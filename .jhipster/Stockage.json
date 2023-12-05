@@ -1,0 +1,40 @@
+{
+  "applications": "*",
+  "changelogDate": "20231204154817",
+  "dto": "mapstruct",
+  "entityTableName": "stockage",
+  "fields": [
+    {
+      "fieldName": "denomination",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "code",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "quantite",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "modifierPar",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateCreation",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "name": "Stockage",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "personne",
+      "relationshipName": "personne",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

@@ -1,0 +1,26 @@
+{
+  "sgpcApp": {
+    "filiale": {
+      "home": {
+        "title": "Filiales",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Filiale",
+        "createOrEditLabel": "Create or edit a Filiale",
+        "notFound": "No Filiales found"
+      },
+      "created": "A new Filiale is created with identifier {{ param }}",
+      "updated": "A Filiale is updated with identifier {{ param }}",
+      "deleted": "A Filiale is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Filiale {{ id }}?"
+      },
+      "detail": {
+        "title": "Filiale"
+      },
+      "id": "ID",
+      "denomination": "Denomination",
+      "sigle": "Sigle",
+      "personne": "Personne"
+    }
+  }
+}

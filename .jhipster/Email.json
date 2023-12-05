@@ -1,0 +1,42 @@
+{
+  "applications": "*",
+  "changelogDate": "20231204154917",
+  "dto": "mapstruct",
+  "entityTableName": "email",
+  "fields": [
+    {
+      "fieldName": "objet",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "contenu",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "destinataire",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateEnvoi",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "name": "Email",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "colisage",
+      "relationshipName": "colisage",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "personne",
+      "relationshipName": "personne",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

@@ -1,0 +1,28 @@
+digraph "sgpc.jh" {
+
+splines  = ortho;
+fontname = "Inconsolata";
+
+node [colorscheme = ylgnbu4];
+edge [colorscheme = dark28, dir = both];
+
+Colisage       [shape = record, label = "{ Colisage |  destination : String\l  canal : String\l  dateCreation : ZonedDateTime\l }"];
+ETATPRODUCTION [shape = record, label = "{ ETATPRODUCTION |  ATTENTE : \l  EN_COURS : \l  VALIDATION : \l  COURRIER : \l  VERIFICATION : \l  TERMINER : \l }"];
+Email          [shape = record, label = "{ Email |  objet : String\l  contenu : String\l  destinataire : String\l  dateEnvoi : ZonedDateTime\l }"];
+Filiale        [shape = record, label = "{ Filiale |  denomination : String\l  sigle : String\l }"];
+Personne       [shape = record, label = "{ Personne |  nom : String\l  prenom : String\l  titre : String\l  numeroDocument : String\l  telephone : String\l }"];
+Production     [shape = record, label = "{ Production |  libelle : String\l  fichier : AnyBlob\l  finish : Boolean\l  etat : ETATPRODUCTION\l  dateDepot : LocalDate\l  dateDebut : LocalDate\l  dateFin : LocalDate\l  dateValider : ZonedDateTime\l  dateOuvert : LocalDate\l  dateCreation : ZonedDateTime\l }"];
+Stockage       [shape = record, label = "{ Stockage |  denomination : String\l  code : String\l  quantite : String\l  dateCreation : ZonedDateTime\l }"];
+User           [shape = record, label = "{ User |  login : String\l }"];
+
+Colisage       -> Email          [color = "#595959", style = solid , arrowtail = vee     , arrowhead = diamond , taillabel = "*", label = "", headlabel = "1"];
+Personne       -> Colisage       [color = "#595959", style = solid , arrowtail = vee     , arrowhead = diamond , taillabel = "*", label = "", headlabel = "1"];
+Personne       -> Email          [color = "#595959", style = solid , arrowtail = vee     , arrowhead = diamond , taillabel = "*", label = "", headlabel = "1"];
+Personne       -> Filiale        [color = "#595959", style = solid , arrowtail = diamond , arrowhead = vee     , taillabel = "1", label = "", headlabel = "*"];
+Personne       -> Production     [color = "#595959", style = solid , arrowtail = vee     , arrowhead = diamond , taillabel = "*", label = "", headlabel = "1"];
+Personne       -> Stockage       [color = "#595959", style = solid , arrowtail = vee     , arrowhead = diamond , taillabel = "*", label = "", headlabel = "1"];
+Personne       -> User           [color = "#595959", style = solid , arrowtail = vee     , arrowhead = vee     , taillabel = "1", label = "", headlabel = "1"];
+Production     -> Colisage       [color = "#595959", style = solid , arrowtail = vee     , arrowhead = diamond , taillabel = "*", label = "", headlabel = "1"];
+Production     -> ETATPRODUCTION [color = "#595959", style = dashed, arrowtail = none    , arrowhead = vee     , taillabel = "", label = "", headlabel = ""];
+
+}
