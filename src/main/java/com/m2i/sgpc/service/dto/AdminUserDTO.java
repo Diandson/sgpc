@@ -51,6 +51,8 @@ public class AdminUserDTO implements Serializable {
 
     private Set<String> authorities;
 
+    private PersonneDTO personne;
+
     public AdminUserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -175,6 +177,14 @@ public class AdminUserDTO implements Serializable {
         this.authorities = authorities;
     }
 
+    public PersonneDTO getPersonne() {
+        return personne;
+    }
+
+    public void setPersonne(PersonneDTO personne) {
+        this.personne = personne;
+    }
+
     // prettier-ignore
     @Override
     public String toString() {
@@ -191,6 +201,7 @@ public class AdminUserDTO implements Serializable {
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", lastModifiedDate=" + lastModifiedDate +
             ", authorities=" + authorities +
+            ", personne=" + personne +
             "}";
     }
 }

@@ -283,3 +283,59 @@ ngx-dropzone-preview {
     position: unset !important;
   }
 }
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group > label {
+  display: block;
+  font-size: 14px;
+  color: #000;
+}
+
+input.form-control {
+  height: 38px;
+  background: #edf0f5;
+  border-color: #c9cdd5;
+  border-radius: 5px;
+  padding: 0 15px;
+  color: black;
+  font-size: 16px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+input.form-control:focus {
+  border-color: #0047cc;
+  -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-controlsel {
+  height: 120px;
+  width: 100%;
+  background: #edf0f5;
+  border-color: #c9cdd5;
+  border-radius: 5px;
+  padding: 0 15px;
+  color: black;
+  font-size: 16px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.form-controlsel:focus {
+  border-color: #0047cc;
+  -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+textarea.form-control {
+  height: 200px;
+  padding-top: 15px;
+  resize: none;
+}

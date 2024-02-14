@@ -8,7 +8,7 @@ export interface IPersonne {
   titre?: string | null;
   numeroDocument?: string | null;
   telephone?: string | null;
-  filiale?: Pick<IFiliale, 'id'> | null;
+  filiale?: Pick<IFiliale, 'id' | 'denomination'> | null;
   user?: Pick<IUser, 'id' | 'login'> | null;
 }
 

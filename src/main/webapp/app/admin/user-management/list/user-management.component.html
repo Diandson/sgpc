@@ -1,51 +1,82 @@
 <div>
-  <h2>
-    <span id="user-management-page-heading" jhiTranslate="userManagement.home.title" data-cy="userManagementPageHeading">Utilisateurs</span>
+  <h2 class="alert alert-light">
+    <span id="user-management-page-heading">Utilisateurs</span>
 
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="userManagement.home.refreshListLabel">Actualiser la liste</span>
-      </button>
-      <button class="btn btn-primary jh-create-entity" [routerLink]="['./new']">
-        <fa-icon icon="plus"></fa-icon> <span jhiTranslate="userManagement.home.createLabel">Créer un nouvel utilisateur</span>
-      </button>
-    </div>
+    <button class="btn btn-primary float-end" (click)="createOrEdite()"><fa-icon icon="plus"></fa-icon> <span>Nouveau</span></button>
+
+    <button class="btn btn-info me-2 float-end" (click)="loadAll()" [disabled]="isLoading">
+      <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+    </button>
   </h2>
 
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
 
-  <div class="table-responsive" *ngIf="users">
-    <table class="table table-striped" aria-describedby="user-management-page-heading">
-      <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="transition()">
-          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="login"><span jhiTranslate="userManagement.login">Login</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="email"><span jhiTranslate="userManagement.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col"></th>
-          <th scope="col" jhiSortBy="langKey"><span jhiTranslate="userManagement.langKey">Langue</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col"><span jhiTranslate="userManagement.profiles">Droits</span></th>
-          <th scope="col" jhiSortBy="createdDate">
-            <span jhiTranslate="userManagement.createdDate">Créé le</span> <fa-icon icon="sort"></fa-icon>
+  <div class="card">
+    <p-table
+      #dt1
+      [value]="users!"
+      dataKey="id"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [loading]="isLoading"
+      [paginator]="true"
+      currentPageReportTemplate="{first} à {last} de {totalRecords}"
+      [globalFilterFields]="['email', 'login']"
+      class="p-datatable-sm p-datatable-gridlines"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex">
+          <span class="p-input-icon-left ml-auto">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              [(ngModel)]="search"
+              (input)="dt1.filterGlobal(search, 'contains')"
+              placeholder="Search keyword"
+            />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="min-width: 15rem">
+            <div class="flex align-items-center">Email</div>
           </th>
-          <th scope="col" jhiSortBy="lastModifiedBy">
-            <span jhiTranslate="userManagement.lastModifiedBy">Modifié par</span> <fa-icon icon="sort"></fa-icon>
+          <th style="min-width: 15rem">
+            <div class="flex align-items-center">Login</div>
           </th>
-          <th scope="col" jhiSortBy="lastModifiedDate">
-            <span jhiTranslate="userManagement.lastModifiedDate">Modifié le</span> <fa-icon icon="sort"></fa-icon>
+          <th style="min-width: 15rem">
+            <div class="flex align-items-center">Nom</div>
           </th>
-          <th scope="col"></th>
+          <!--          <th style="min-width:15rem">-->
+          <!--            <div class="flex align-items-center">-->
+          <!--              Prénom-->
+          <!--            </div>-->
+          <!--          </th>-->
+          <th style="min-width: 10rem">
+            <div class="flex align-items-center">État</div>
+          </th>
+          <th style="min-width: 10rem">
+            <div class="flex align-items-center">Profiles</div>
+          </th>
+          <th style="width: 3rem"></th>
         </tr>
-      </thead>
-      <tbody *ngIf="users">
-        <tr *ngFor="let user of users; trackBy: trackIdentity">
+      </ng-template>
+      <ng-template pTemplate="body" let-user>
+        <tr>
           <td>
-            <a [routerLink]="['./', user.login, 'view']">{{ user.id }}</a>
+            <!--            <img [alt]="customer.representative.name" src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{ customer.representative.image }}" width="32" style="vertical-align: middle" />-->
+            <span class="ml-1 vertical-align-middle">{{ user.email }}</span>
           </td>
-          <td>{{ user.login }}</td>
-          <td>{{ user.email }}</td>
+          <td>
+            {{ user.login }}
+          </td>
+          <td>{{ user.lastName }}</td>
+          <!--          <td>{{ user.firstName }}</td>-->
           <td>
             <button
               class="btn btn-danger btn-sm"
@@ -65,25 +96,19 @@
               Activé
             </button>
           </td>
-          <td>{{ user.langKey }}</td>
           <td>
             <div *ngFor="let authority of user.authorities">
               <span class="badge bg-info">{{ authority }}</span>
             </div>
           </td>
-          <td>{{ user.createdDate | date: 'dd/MM/yy HH:mm' }}</td>
-          <td>{{ user.lastModifiedBy }}</td>
-          <td>{{ user.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button type="submit" [routerLink]="['./', user.login, 'view']" class="btn btn-info btn-sm">
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Voir</span>
               </button>
 
-              <button type="submit" [routerLink]="['./', user.login, 'edit']" queryParamsHandling="merge" class="btn btn-primary btn-sm">
+              <button type="submit" (click)="createOrEdite(user)" queryParamsHandling="merge" class="btn btn-primary btn-sm">
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editer</span>
               </button>
 
               <button
@@ -93,30 +118,11 @@
                 [disabled]="!currentAccount || currentAccount.login === user.login"
               >
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Supprimer</span>
               </button>
             </div>
           </td>
         </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div *ngIf="users">
-    <div class="d-flex justify-content-center">
-      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-    </div>
-
-    <div class="d-flex justify-content-center">
-      <ngb-pagination
-        [collectionSize]="totalItems"
-        [(page)]="page"
-        [pageSize]="itemsPerPage"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="transition()"
-      ></ngb-pagination>
-    </div>
+      </ng-template>
+    </p-table>
   </div>
 </div>

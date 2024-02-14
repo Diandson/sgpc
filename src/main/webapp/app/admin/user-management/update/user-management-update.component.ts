@@ -6,8 +6,15 @@ import SharedModule from 'app/shared/shared.module';
 import { LANGUAGES } from 'app/config/language.constants';
 import { IUser } from '../user-management.model';
 import { UserManagementService } from '../service/user-management.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { IFiliale } from '../../../entities/filiale/filiale.model';
+import { map } from 'rxjs/operators';
+import { HttpResponse } from '@angular/common/http';
+import { FilialeService } from '../../../entities/filiale/service/filiale.service';
+import { IPersonne } from '../../../entities/personne/personne.model';
 
 const userTemplate = {} as IUser;
+const personneTemplate = {} as IPersonne;
 
 const newUser: IUser = {
   langKey: 'fr',
@@ -24,6 +31,8 @@ export default class UserManagementUpdateComponent implements OnInit {
   languages = LANGUAGES;
   authorities: string[] = [];
   isSaving = false;
+  user?: IUser;
+  filialesSharedCollection: IFiliale[] = [];
 
   editForm = new FormGroup({
     id: new FormControl(userTemplate.id),
@@ -45,31 +54,58 @@ export default class UserManagementUpdateComponent implements OnInit {
     activated: new FormControl(userTemplate.activated, { nonNullable: true }),
     langKey: new FormControl(userTemplate.langKey, { nonNullable: true }),
     authorities: new FormControl(userTemplate.authorities, { nonNullable: true }),
+    telephone: new FormControl(personneTemplate.telephone, { nonNullable: true }),
+    titre: new FormControl(personneTemplate.titre!, { nonNullable: true }),
+    numeroDocument: new FormControl(personneTemplate.numeroDocument!, { nonNullable: true }),
+    filiale: new FormControl(personneTemplate.filiale!, { nonNullable: true }),
+    personne: new FormControl(userTemplate.personne, { nonNullable: true }),
   });
 
   constructor(
     private userService: UserManagementService,
     private route: ActivatedRoute,
+    protected filialeService: FilialeService,
+    private activedModal: NgbActiveModal,
   ) {}
 
   ngOnInit(): void {
-    this.route.data.subscribe(({ user }) => {
-      if (user) {
-        this.editForm.reset(user);
-      } else {
-        this.editForm.reset(newUser);
-      }
-    });
+    // this.route.data.subscribe(({ user }) => {
+    //   if (user) {
+    //     this.editForm.reset(user);
+    //   } else {
+    //     this.editForm.reset(newUser);
+    //   }
+    // });
+    if (this.user) {
+      this.editForm.reset(this.user);
+    }
     this.userService.authorities().subscribe(authorities => (this.authorities = authorities));
+
+    this.filialeService
+      .query()
+      .pipe(map((res: HttpResponse<IFiliale[]>) => res.body ?? []))
+      .pipe(
+        map((filiales: IFiliale[]) =>
+          this.filialeService.addFilialeToCollectionIfMissing<IFiliale>(filiales, this.user?.personne?.filiale),
+        ),
+      )
+      .subscribe((filiales: IFiliale[]) => (this.filialesSharedCollection = filiales));
   }
 
   previousState(): void {
-    window.history.back();
+    // window.history.back();
+    this.activedModal.dismiss();
   }
 
   save(): void {
     this.isSaving = true;
     const user = this.editForm.getRawValue();
+    const personne = {} as IPersonne;
+    personne.filiale = user.filiale;
+    personne.telephone = user.telephone;
+    personne.titre = user.titre;
+    personne.numeroDocument = user.numeroDocument;
+    user.personne = personne;
     if (user.id !== null) {
       this.userService.update(user).subscribe({
         next: () => this.onSaveSuccess(),
@@ -85,7 +121,8 @@ export default class UserManagementUpdateComponent implements OnInit {
 
   private onSaveSuccess(): void {
     this.isSaving = false;
-    this.previousState();
+    // this.previousState();
+    this.activedModal.close('success');
   }
 
   private onSaveError(): void {

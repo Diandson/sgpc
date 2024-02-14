@@ -1,23 +1,19 @@
 <div>
-  <h2 id="page-heading" data-cy="ProductionHeading">
+  <h2 class="alert alert-light">
     <span jhiTranslate="sgpcApp.production.home.title">Productions</span>
 
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="sgpcApp.production.home.refreshListLabel">Actualiser la liste</span>
-      </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-production"
-        [routerLink]="['/production/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="sgpcApp.production.home.createLabel">Créer un nouveau Production</span>
-      </button>
-    </div>
+    <button
+      id="jh-create-entity"
+      class="btn btn-primary jh-create-entity float-end"
+      (click)="createOrEdite()"
+      *jhiHasAnyAuthority="[auth.DEPOT]"
+    >
+      <fa-icon icon="plus"></fa-icon>
+      <span>Nouveau</span>
+    </button>
+    <button class="btn btn-info me-2 float-end" (click)="load()" [disabled]="isLoading">
+      <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+    </button>
   </h2>
 
   <jhi-alert-error></jhi-alert-error>
@@ -32,12 +28,6 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span jhiTranslate="global.field.id">ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="libelle">
             <div class="d-flex">
               <span jhiTranslate="sgpcApp.production.libelle">Libelle</span>
@@ -86,39 +76,9 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="dateValider">
-            <div class="d-flex">
-              <span jhiTranslate="sgpcApp.production.dateValider">Date Valider</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="dateOuvert">
-            <div class="d-flex">
-              <span jhiTranslate="sgpcApp.production.dateOuvert">Date Ouvert</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="dateCreation">
             <div class="d-flex">
               <span jhiTranslate="sgpcApp.production.dateCreation">Date Creation</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="personne.id">
-            <div class="d-flex">
-              <span jhiTranslate="sgpcApp.production.personne">Personne</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="producteur.id">
-            <div class="d-flex">
-              <span jhiTranslate="sgpcApp.production.producteur">Producteur</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="receveur.id">
-            <div class="d-flex">
-              <span jhiTranslate="sgpcApp.production.receveur">Receveur</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -127,9 +87,6 @@
       </thead>
       <tbody>
         <tr *ngFor="let production of productions; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/production', production.id, 'view']">{{ production.id }}</a>
-          </td>
           <td>{{ production.libelle }}</td>
           <td>
             <a
@@ -146,39 +103,20 @@
           <td>{{ production.dateDepot | formatMediumDate }}</td>
           <td>{{ production.dateDebut | formatMediumDate }}</td>
           <td>{{ production.dateFin | formatMediumDate }}</td>
-          <td>{{ production.dateValider | formatMediumDatetime }}</td>
-          <td>{{ production.dateOuvert | formatMediumDate }}</td>
           <td>{{ production.dateCreation | formatMediumDatetime }}</td>
-          <td>
-            <div *ngIf="production.personne">
-              <a [routerLink]="['/personne', production.personne.id, 'view']">{{ production.personne.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="production.producteur">
-              <a [routerLink]="['/personne', production.producteur.id, 'view']">{{ production.producteur.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="production.receveur">
-              <a [routerLink]="['/personne', production.receveur.id, 'view']">{{ production.receveur.id }}</a>
-            </div>
-          </td>
+
           <td class="text-end">
             <div class="btn-group">
               <a [routerLink]="['/production', production.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Voir</span>
               </a>
 
-              <a [routerLink]="['/production', production.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+              <a (click)="createOrEdite(production)" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editer</span>
               </a>
 
               <button type="submit" (click)="delete(production)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Supprimer</span>
               </button>
             </div>
           </td>

@@ -12,6 +12,7 @@ import { PersonneService } from 'app/entities/personne/service/personne.service'
 import { IColisage } from '../colisage.model';
 import { ColisageService } from '../service/colisage.service';
 import { ColisageFormService, ColisageFormGroup } from './colisage-form.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   standalone: true,
@@ -32,23 +33,24 @@ export class ColisageUpdateComponent implements OnInit {
     protected colisageFormService: ColisageFormService,
     protected personneService: PersonneService,
     protected activatedRoute: ActivatedRoute,
+    protected activedModal: NgbActiveModal,
   ) {}
 
   comparePersonne = (o1: IPersonne | null, o2: IPersonne | null): boolean => this.personneService.comparePersonne(o1, o2);
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ colisage }) => {
-      this.colisage = colisage;
-      if (colisage) {
-        this.updateForm(colisage);
-      }
-
-      this.loadRelationshipsOptions();
-    });
+    // this.activatedRoute.data.subscribe(({ colisage }) => {
+    //   this.colisage = colisage;
+    //   this.loadRelationshipsOptions();
+    // });
+    if (this.colisage) {
+      this.updateForm(this.colisage);
+    }
   }
 
   previousState(): void {
-    window.history.back();
+    // window.history.back();
+    this.activedModal.dismiss();
   }
 
   save(): void {
@@ -69,7 +71,8 @@ export class ColisageUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
-    this.previousState();
+    // this.previousState();
+    this.activedModal.close('success');
   }
 
   protected onSaveError(): void {

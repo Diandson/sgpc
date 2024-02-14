@@ -16,9 +16,9 @@ export interface IProduction {
   dateValider?: dayjs.Dayjs | null;
   dateOuvert?: dayjs.Dayjs | null;
   dateCreation?: dayjs.Dayjs | null;
-  personne?: Pick<IPersonne, 'id'> | null;
-  producteur?: Pick<IPersonne, 'id'> | null;
-  receveur?: Pick<IPersonne, 'id'> | null;
+  personne?: Pick<IPersonne, 'id' | 'nom' | 'prenom'> | null;
+  producteur?: Pick<IPersonne, 'id' | 'nom' | 'prenom'> | null;
+  receveur?: Pick<IPersonne, 'id' | 'nom' | 'prenom'> | null;
 }
 
 export type NewProduction = Omit<IProduction, 'id'> & { id: null };

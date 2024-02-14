@@ -1,6 +1,10 @@
 package com.m2i.sgpc.repository;
 
+import com.m2i.sgpc.config.Constants;
 import com.m2i.sgpc.domain.Personne;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -37,4 +41,9 @@ public interface PersonneRepository extends JpaRepository<Personne, Long> {
 
     @Query("select personne from Personne personne left join fetch personne.user where personne.id =:id")
     Optional<Personne> findOneWithToOneRelationships(@Param("id") Long id);
+
+    Boolean existsByUserId(Long user_id);
+
+    Personne getByUserId(Long user_id);
+    Personne findByUserLogin(@NotNull @Pattern(regexp = Constants.LOGIN_REGEX) @Size(min = 1, max = 50) String user_login);
 }

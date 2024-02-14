@@ -1,6 +1,7 @@
 package com.m2i.sgpc.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 import com.m2i.sgpc.IntegrationTest;
 import com.m2i.sgpc.domain.User;

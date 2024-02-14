@@ -1,51 +1,40 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-filiale-heading" data-cy="FilialeCreateUpdateHeading" jhiTranslate="sgpcApp.filiale.home.createOrEditLabel">
-        Créer ou éditer un Filiale
-      </h2>
-
-      <div>
-        <jhi-alert-error></jhi-alert-error>
-
-        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" jhiTranslate="sgpcApp.filiale.denomination" for="field_denomination">Denomination</label>
-          <input
-            type="text"
-            class="form-control"
-            name="denomination"
-            id="field_denomination"
-            data-cy="denomination"
-            formControlName="denomination"
-          />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" jhiTranslate="sgpcApp.filiale.sigle" for="field_sigle">Sigle</label>
-          <input type="text" class="form-control" name="sigle" id="field_sigle" data-cy="sigle" formControlName="sigle" />
-        </div>
-      </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
-        </button>
-
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
-        </button>
-      </div>
-    </form>
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+  <div class="modal-header">
+    <h2 class="modal-title">Filiales</h2>
   </div>
-</div>
+
+  <div class="modal-body">
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="form-group" *ngIf="editForm.controls.id.value !== null">
+      <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+      <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" jhiTranslate="sgpcApp.filiale.denomination">Dénomination</label>
+      <input type="text" class="form-control" name="denomination" data-cy="denomination" formControlName="denomination" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" jhiTranslate="sgpcApp.filiale.sigle" for="field_sigle">Sigle</label>
+      <input type="text" class="form-control" name="sigle" id="field_sigle" data-cy="sigle" formControlName="sigle" />
+    </div>
+  </div>
+
+  <div class="modal-footer justify-content-end">
+    <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+      <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
+    </button>
+
+    <button
+      type="submit"
+      id="save-entity"
+      data-cy="entityCreateSaveButton"
+      [disabled]="editForm.invalid || isSaving"
+      class="btn btn-primary"
+    >
+      <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
+    </button>
+  </div>
+</form>

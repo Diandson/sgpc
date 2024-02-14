@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IFiliale } from '../filiale.model';
 import { FilialeService } from '../service/filiale.service';
 import { FilialeFormService, FilialeFormGroup } from './filiale-form.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   standalone: true,
@@ -27,19 +28,21 @@ export class FilialeUpdateComponent implements OnInit {
     protected filialeService: FilialeService,
     protected filialeFormService: FilialeFormService,
     protected activatedRoute: ActivatedRoute,
+    protected activedModal: NgbActiveModal,
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ filiale }) => {
-      this.filiale = filiale;
-      if (filiale) {
-        this.updateForm(filiale);
-      }
-    });
+    // this.activatedRoute.data.subscribe(({ filiale }) => {
+    //   this.filiale = filiale;
+    // });
+    if (this.filiale) {
+      this.updateForm(this.filiale);
+    }
   }
 
   previousState(): void {
-    window.history.back();
+    // window.history.back();
+    this.activedModal.dismiss();
   }
 
   save(): void {
@@ -60,7 +63,8 @@ export class FilialeUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
-    this.previousState();
+    // this.previousState();
+    this.activedModal.close('success');
   }
 
   protected onSaveError(): void {

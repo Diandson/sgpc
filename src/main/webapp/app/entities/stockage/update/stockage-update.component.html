@@ -8,12 +8,12 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
+        <div class="form-group" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
           <label class="form-label" jhiTranslate="sgpcApp.stockage.denomination" for="field_denomination">Denomination</label>
           <input
             type="text"
@@ -25,17 +25,17 @@
           />
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
           <label class="form-label" jhiTranslate="sgpcApp.stockage.code" for="field_code">Code</label>
           <input type="text" class="form-control" name="code" id="field_code" data-cy="code" formControlName="code" />
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
           <label class="form-label" jhiTranslate="sgpcApp.stockage.quantite" for="field_quantite">Quantite</label>
           <input type="text" class="form-control" name="quantite" id="field_quantite" data-cy="quantite" formControlName="quantite" />
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
           <label class="form-label" jhiTranslate="sgpcApp.stockage.modifierPar" for="field_modifierPar">Modifier Par</label>
           <input
             type="text"
@@ -47,7 +47,7 @@
           />
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
           <label class="form-label" jhiTranslate="sgpcApp.stockage.dateCreation" for="field_dateCreation">Date Creation</label>
           <div class="d-flex">
             <input
@@ -62,7 +62,7 @@
           </div>
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
           <label class="form-label" jhiTranslate="sgpcApp.stockage.personne" for="field_personne">Personne</label>
           <select
             class="form-control"

@@ -15,6 +15,9 @@ import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/conf
 import { IColisage } from '../colisage.model';
 import { EntityArrayResponseType, ColisageService } from '../service/colisage.service';
 import { ColisageDeleteDialogComponent } from '../delete/colisage-delete-dialog.component';
+import { ColisageUpdateComponent } from '../update/colisage-update.component';
+import { Authority } from '../../../config/authority.constants';
+import HasAnyAuthorityDirective from '../../../shared/auth/has-any-authority.directive';
 
 @Component({
   standalone: true,
@@ -30,6 +33,7 @@ import { ColisageDeleteDialogComponent } from '../delete/colisage-delete-dialog.
     FormatMediumDatetimePipe,
     FormatMediumDatePipe,
     ItemCountComponent,
+    HasAnyAuthorityDirective,
   ],
 })
 export class ColisageComponent implements OnInit {
@@ -42,6 +46,7 @@ export class ColisageComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
+  auth = Authority;
 
   constructor(
     protected colisageService: ColisageService,
@@ -70,6 +75,19 @@ export class ColisageComponent implements OnInit {
           this.onResponseSuccess(res);
         },
       });
+  }
+
+  createOrEdite(colisage?: IColisage): void {
+    const modalRef = this.modalService.open(ColisageUpdateComponent, { size: 'lg', backdrop: 'static' });
+    if (colisage) {
+      modalRef.componentInstance.colisage = colisage;
+    }
+    // unsubscribe not needed because closed completes on modal close
+    modalRef.result.then(rs => {
+      if (rs === 'success') {
+        this.load();
+      }
+    });
   }
 
   load(): void {

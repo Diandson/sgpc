@@ -5,7 +5,7 @@
         <div class="card overflow-hidden">
           <div class="bg-primary-subtle">
             <div class="row">
-              <div class="col-7">
+              <div class="col-12">
                 <div class="text-primary p-4">
                   <h2 class="text-black">Authentification</h2>
                 </div>
@@ -29,7 +29,7 @@
               <form class="form-horizontal" [formGroup]="loginForm" (ngSubmit)="login()">
                 <alert type="danger" *ngIf="authenticationError" [dismissible]="false">{{ error }}</alert>
 
-                <div class="mb-3">
+                <div class="form-group">
                   <label>Nom d'utilisateur</label>
                   <input
                     type="email"
@@ -44,7 +44,7 @@
                   </div>
                 </div>
 
-                <div class="mb-3">
+                <div class="form-group">
                   <label>Password</label>
                   <div class="input-group auth-pass-inputgroup">
                     <input

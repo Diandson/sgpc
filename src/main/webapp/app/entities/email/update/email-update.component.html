@@ -8,22 +8,22 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
+        <div class="form-group" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
           <label class="form-label" jhiTranslate="sgpcApp.email.objet" for="field_objet">Objet</label>
           <input type="text" class="form-control" name="objet" id="field_objet" data-cy="objet" formControlName="objet" />
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
           <label class="form-label" jhiTranslate="sgpcApp.email.contenu" for="field_contenu">Contenu</label>
           <input type="text" class="form-control" name="contenu" id="field_contenu" data-cy="contenu" formControlName="contenu" />
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
           <label class="form-label" jhiTranslate="sgpcApp.email.destinataire" for="field_destinataire">Destinataire</label>
           <input
             type="text"
@@ -35,7 +35,7 @@
           />
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
           <label class="form-label" jhiTranslate="sgpcApp.email.dateEnvoi" for="field_dateEnvoi">Date Envoi</label>
           <div class="d-flex">
             <input
@@ -50,7 +50,7 @@
           </div>
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
           <label class="form-label" jhiTranslate="sgpcApp.email.colisage" for="field_colisage">Colisage</label>
           <select
             class="form-control"
@@ -65,7 +65,7 @@
           </select>
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
           <label class="form-label" jhiTranslate="sgpcApp.email.personne" for="field_personne">Personne</label>
           <select
             class="form-control"

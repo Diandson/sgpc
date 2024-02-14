@@ -1,11 +1,1 @@
 id;libelle;fichier;fichier_content_type;finish;etat;valider_par;date_depot;date_debut;date_fin;date_valider;date_ouvert;date_creation
-1;si de façon à environ;../fake-data/blob/hipster.png;image/png;true;EN_COURS;toc-toc mieux;2023-12-04;2023-12-03;2023-12-04;2023-12-04T12:10:27;2023-12-03;2023-12-04T07:32:24
-2;déranger trop;../fake-data/blob/hipster.png;image/png;true;TERMINER;extrêmement;2023-12-04;2023-12-04;2023-12-03;2023-12-04T14:13:31;2023-12-04;2023-12-04T14:46:11
-3;même;../fake-data/blob/hipster.png;image/png;true;ATTENTE;encore;2023-12-04;2023-12-04;2023-12-04;2023-12-04T15:10:34;2023-12-04;2023-12-03T21:15:33
-4;comment porte-parole dès que;../fake-data/blob/hipster.png;image/png;true;VERIFICATION;oups bè;2023-12-04;2023-12-04;2023-12-03;2023-12-04T14:14:49;2023-12-04;2023-12-04T04:24:53
-5;à l'exception de;../fake-data/blob/hipster.png;image/png;true;VERIFICATION;crac infime tranquille;2023-12-03;2023-12-03;2023-12-04;2023-12-04T11:14:41;2023-12-04;2023-12-03T22:00:10
-6;rédaction;../fake-data/blob/hipster.png;image/png;false;VERIFICATION;pourvu que;2023-12-04;2023-12-03;2023-12-04;2023-12-03T15:55:29;2023-12-04;2023-12-04T14:41:56
-7;d'après nonobstant;../fake-data/blob/hipster.png;image/png;false;ATTENTE;clac en dehors de;2023-12-04;2023-12-04;2023-12-03;2023-12-03T23:51:46;2023-12-04;2023-12-04T15:06:50
-8;tendre;../fake-data/blob/hipster.png;image/png;true;VALIDATION;gonfler;2023-12-04;2023-12-04;2023-12-04;2023-12-03T18:50:26;2023-12-04;2023-12-04T05:16:43
-9;gens;../fake-data/blob/hipster.png;image/png;true;COURRIER;perdre;2023-12-04;2023-12-04;2023-12-04;2023-12-04T13:21:37;2023-12-03;2023-12-04T05:16:09
-10;environ consacrer amorphe;../fake-data/blob/hipster.png;image/png;true;ATTENTE;filer sombre;2023-12-04;2023-12-04;2023-12-03;2023-12-04T14:12:23;2023-12-04;2023-12-04T15:17:51

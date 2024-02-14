@@ -1,12 +1,17 @@
 package com.m2i.sgpc.service;
 
 import com.m2i.sgpc.domain.Production;
+import com.m2i.sgpc.domain.enumeration.ETATPRODUCTION;
+import com.m2i.sgpc.repository.PersonneRepository;
 import com.m2i.sgpc.repository.ProductionRepository;
+import com.m2i.sgpc.security.SecurityUtils;
 import com.m2i.sgpc.service.dto.ProductionDTO;
 import com.m2i.sgpc.service.mapper.ProductionMapper;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,6 +30,9 @@ public class ProductionService {
 
     private final ProductionMapper productionMapper;
 
+    @Autowired
+    private PersonneRepository personneRepository;
+
     public ProductionService(ProductionRepository productionRepository, ProductionMapper productionMapper) {
         this.productionRepository = productionRepository;
         this.productionMapper = productionMapper;
@@ -39,6 +47,9 @@ public class ProductionService {
     public ProductionDTO save(ProductionDTO productionDTO) {
         log.debug("Request to save Production : {}", productionDTO);
         Production production = productionMapper.toEntity(productionDTO);
+        production.setEtat(ETATPRODUCTION.ATTENTE);
+        production.setPersonne(personneRepository.findByUserLogin(SecurityUtils.getCurrentUserLogin().get()));
+        production.setDateCreation(ZonedDateTime.now());
         production = productionRepository.save(production);
         return productionMapper.toDto(production);
     }

@@ -15,6 +15,7 @@ import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/conf
 import { IPersonne } from '../personne.model';
 import { EntityArrayResponseType, PersonneService } from '../service/personne.service';
 import { PersonneDeleteDialogComponent } from '../delete/personne-delete-dialog.component';
+import { PersonneUpdateComponent } from '../update/personne-update.component';
 
 @Component({
   standalone: true,
@@ -70,6 +71,18 @@ export class PersonneComponent implements OnInit {
           this.onResponseSuccess(res);
         },
       });
+  }
+
+  createOrEdite(personne?: IPersonne): void {
+    const modalRef = this.modalService.open(PersonneUpdateComponent, { size: 'lg', backdrop: 'static' });
+    if (personne) {
+      modalRef.componentInstance.personne = personne;
+    }
+    modalRef.result.then(rs => {
+      if (rs === 'success') {
+        this.load();
+      }
+    });
   }
 
   load(): void {

@@ -2,19 +2,23 @@ package com.m2i.sgpc.service;
 
 import com.m2i.sgpc.config.Constants;
 import com.m2i.sgpc.domain.Authority;
+import com.m2i.sgpc.domain.Personne;
 import com.m2i.sgpc.domain.User;
 import com.m2i.sgpc.repository.AuthorityRepository;
+import com.m2i.sgpc.repository.PersonneRepository;
 import com.m2i.sgpc.repository.UserRepository;
 import com.m2i.sgpc.security.AuthoritiesConstants;
 import com.m2i.sgpc.security.SecurityUtils;
 import com.m2i.sgpc.service.dto.AdminUserDTO;
 import com.m2i.sgpc.service.dto.UserDTO;
+import com.m2i.sgpc.service.mapper.PersonneMapper;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +44,12 @@ public class UserService {
     private final AuthorityRepository authorityRepository;
 
     private final CacheManager cacheManager;
+
+    @Autowired
+    private PersonneMapper personneMapper;
+
+    @Autowired
+    private PersonneRepository personneRepository;
 
     public UserService(
         UserRepository userRepository,
@@ -159,7 +169,7 @@ public class UserService {
         } else {
             user.setLangKey(userDTO.getLangKey());
         }
-        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+        String encryptedPassword = passwordEncoder.encode("1234");
         user.setPassword(encryptedPassword);
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
@@ -174,7 +184,12 @@ public class UserService {
                 .collect(Collectors.toSet());
             user.setAuthorities(authorities);
         }
-        userRepository.save(user);
+        user = userRepository.save(user);
+        Personne personne = personneMapper.toEntity(userDTO.getPersonne());
+        personne.setNom(userDTO.getLastName());
+        personne.setPrenom(userDTO.getFirstName());
+        personne.setUser(user);
+        personne = personneRepository.save(personne);
         this.clearUserCaches(user);
         log.debug("Created Information for User: {}", user);
         return user;
@@ -274,8 +289,17 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Page<AdminUserDTO> getAllManagedUsers(Pageable pageable) {
-        return userRepository.findAll(pageable).map(AdminUserDTO::new);
+    public List<AdminUserDTO> getAllManagedUsers(Pageable pageable) {
+        return userRepository
+            .findAll()
+            .stream()
+            .map(AdminUserDTO::new)
+            .peek(adminUserDTO -> {
+                if (personneRepository.existsByUserId(adminUserDTO.getId())) {
+                    adminUserDTO.setPersonne(personneMapper.toDto(personneRepository.getByUserId(adminUserDTO.getId())));
+                }
+            })
+            .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)

@@ -2,9 +2,12 @@ import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
-import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../../../core/services/language.service';
 import { LoginService } from '../../../login/login.service';
+import { Account } from '../../../core/auth/account.model';
+import { AccountService } from '../../../core/auth/account.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-topbar',
@@ -21,11 +24,13 @@ export class TopbarComponent implements OnInit {
   flagvalue: any;
   countryName: string | string[] | undefined;
   valueset: any;
+  account: Account | null = null;
 
   constructor(
     @Inject(DOCUMENT) private document: any,
     private router: Router,
     private loginService: LoginService,
+    private accountService: AccountService,
     public languageService: LanguageService,
     public _cookiesService: CookieService,
   ) {}
@@ -43,7 +48,14 @@ export class TopbarComponent implements OnInit {
   @Output() settingsButtonClicked = new EventEmitter();
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
+  private readonly destroy$ = new Subject<void>();
+
   ngOnInit() {
+    this.accountService
+      .getAuthenticationState()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(account => (this.account = account));
+
     this.openMobileMenu = false;
     this.element = document.documentElement;
 

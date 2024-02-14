@@ -1,3 +1,5 @@
+import { IPersonne } from '../../entities/personne/personne.model';
+
 export interface IUser {
   id: number | null;
   login?: string;
@@ -11,6 +13,7 @@ export interface IUser {
   createdDate?: Date;
   lastModifiedBy?: string;
   lastModifiedDate?: Date;
+  personne?: IPersonne;
 }
 
 export class User implements IUser {
@@ -27,5 +30,6 @@ export class User implements IUser {
     public createdDate?: Date,
     public lastModifiedBy?: string,
     public lastModifiedDate?: Date,
+    public personne?: IPersonne,
   ) {}
 }

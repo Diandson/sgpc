@@ -16,6 +16,7 @@ import { ETATPRODUCTION } from 'app/entities/enumerations/etatproduction.model';
 import { ProductionService } from '../service/production.service';
 import { IProduction } from '../production.model';
 import { ProductionFormService, ProductionFormGroup } from './production-form.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   standalone: true,
@@ -39,19 +40,19 @@ export class ProductionUpdateComponent implements OnInit {
     protected productionFormService: ProductionFormService,
     protected personneService: PersonneService,
     protected activatedRoute: ActivatedRoute,
+    protected activedModal: NgbActiveModal,
   ) {}
 
   comparePersonne = (o1: IPersonne | null, o2: IPersonne | null): boolean => this.personneService.comparePersonne(o1, o2);
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ production }) => {
-      this.production = production;
-      if (production) {
-        this.updateForm(production);
-      }
-
-      this.loadRelationshipsOptions();
-    });
+    // this.activatedRoute.data.subscribe(({ production }) => {
+    //   this.production = production;
+    // });
+    if (this.production) {
+      this.updateForm(this.production);
+    }
+    this.loadRelationshipsOptions();
   }
 
   byteSize(base64String: string): string {
@@ -70,7 +71,8 @@ export class ProductionUpdateComponent implements OnInit {
   }
 
   previousState(): void {
-    window.history.back();
+    // window.history.back();
+    this.activedModal.dismiss();
   }
 
   save(): void {
@@ -91,7 +93,8 @@ export class ProductionUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
-    this.previousState();
+    // this.previousState();
+    this.activedModal.close('success');
   }
 
   protected onSaveError(): void {

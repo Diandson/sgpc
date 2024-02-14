@@ -5,11 +5,16 @@ put Sass variables here:
 eg $input-color: red;
 ****************************/
 // Override Bootstrap variables
-@import 'bootstrap-variables';
+@import './bootstrap-variables';
 // Import Bootstrap source files from node_modules
-//@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap/dist/css/bootstrap.css';
 
 /* jhipster-needle-scss-add-vendor JHipster will add new css style */
 
 @import './app';
 @import './icons';
+@import '@ng-select/ng-select/themes/default.theme.css';
+
+@import 'primeng/resources/themes/soho-light/theme.css';
+@import 'primeng/resources/primeng.css';
+@import 'primeicons/primeicons.css';

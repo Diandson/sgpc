@@ -20,6 +20,7 @@ public interface PersonneMapper extends EntityMapper<PersonneDTO, Personne> {
     @Named("filialeId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "denomination", source = "denomination")
     FilialeDTO toDtoFilialeId(Filiale filiale);
 
     @Named("userLogin")

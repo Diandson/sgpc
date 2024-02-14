@@ -14,6 +14,7 @@ import { UserService } from 'app/entities/user/user.service';
 import { PersonneService } from '../service/personne.service';
 import { IPersonne } from '../personne.model';
 import { PersonneFormService, PersonneFormGroup } from './personne-form.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   standalone: true,
@@ -36,6 +37,7 @@ export class PersonneUpdateComponent implements OnInit {
     protected filialeService: FilialeService,
     protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
+    protected activedModal: NgbActiveModal,
   ) {}
 
   compareFiliale = (o1: IFiliale | null, o2: IFiliale | null): boolean => this.filialeService.compareFiliale(o1, o2);
@@ -43,18 +45,19 @@ export class PersonneUpdateComponent implements OnInit {
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ personne }) => {
-      this.personne = personne;
-      if (personne) {
-        this.updateForm(personne);
-      }
+    // this.activatedRoute.data.subscribe(({ personne }) => {
+    //   this.personne = personne;
+    // });
 
-      this.loadRelationshipsOptions();
-    });
+    if (this.personne) {
+      this.updateForm(this.personne);
+    }
+    this.loadRelationshipsOptions();
   }
 
   previousState(): void {
-    window.history.back();
+    // window.history.back();
+    this.activedModal.dismiss();
   }
 
   save(): void {
@@ -75,7 +78,8 @@ export class PersonneUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
-    this.previousState();
+    // this.previousState();
+    this.activedModal.close('success');
   }
 
   protected onSaveError(): void {

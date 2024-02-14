@@ -19,5 +19,7 @@ public interface ProductionMapper extends EntityMapper<ProductionDTO, Production
     @Named("personneId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "nom", source = "nom")
+    @Mapping(target = "prenom", source = "prenom")
     PersonneDTO toDtoPersonneId(Personne personne);
 }

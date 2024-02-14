@@ -1,3 +1,5 @@
+import { IPersonne } from '../../entities/personne/personne.model';
+
 export class Account {
   constructor(
     public activated: boolean,
@@ -8,5 +10,6 @@ export class Account {
     public lastName: string | null,
     public login: string,
     public imageUrl: string | null,
+    personne: IPersonne | null,
   ) {}
 }

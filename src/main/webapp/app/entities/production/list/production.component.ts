@@ -16,6 +16,9 @@ import { IProduction } from '../production.model';
 
 import { EntityArrayResponseType, ProductionService } from '../service/production.service';
 import { ProductionDeleteDialogComponent } from '../delete/production-delete-dialog.component';
+import { ProductionUpdateComponent } from '../update/production-update.component';
+import { Authority } from '../../../config/authority.constants';
+import HasAnyAuthorityDirective from '../../../shared/auth/has-any-authority.directive';
 
 @Component({
   standalone: true,
@@ -31,6 +34,7 @@ import { ProductionDeleteDialogComponent } from '../delete/production-delete-dia
     FormatMediumDatetimePipe,
     FormatMediumDatePipe,
     ItemCountComponent,
+    HasAnyAuthorityDirective,
   ],
 })
 export class ProductionComponent implements OnInit {
@@ -43,6 +47,7 @@ export class ProductionComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
+  auth = Authority;
 
   constructor(
     protected productionService: ProductionService,
@@ -80,6 +85,19 @@ export class ProductionComponent implements OnInit {
           this.onResponseSuccess(res);
         },
       });
+  }
+
+  createOrEdite(production?: IProduction): void {
+    const modalRef = this.modalService.open(ProductionUpdateComponent, { size: 'lg', backdrop: 'static' });
+    if (production) {
+      modalRef.componentInstance.production = production;
+    }
+    // unsubscribe not needed because closed completes on modal close
+    modalRef.result.then(rs => {
+      if (rs === 'success') {
+        this.load();
+      }
+    });
   }
 
   load(): void {

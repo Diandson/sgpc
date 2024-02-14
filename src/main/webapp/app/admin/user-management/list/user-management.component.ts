@@ -14,17 +14,32 @@ import { Account } from 'app/core/auth/account.model';
 import { UserManagementService } from '../service/user-management.service';
 import { User } from '../user-management.model';
 import UserManagementDeleteDialogComponent from '../delete/user-management-delete-dialog.component';
+import UserManagementUpdateComponent from '../update/user-management-update.component';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
   selector: 'jhi-user-mgmt',
   templateUrl: './user-management.component.html',
-  imports: [RouterModule, SharedModule, SortDirective, SortByDirective, UserManagementDeleteDialogComponent, ItemCountComponent],
+  imports: [
+    RouterModule,
+    SharedModule,
+    SortDirective,
+    SortByDirective,
+    UserManagementDeleteDialogComponent,
+    ItemCountComponent,
+    TableModule,
+    InputTextModule,
+    FormsModule,
+  ],
 })
 export default class UserManagementComponent implements OnInit {
   currentAccount: Account | null = null;
   users: User[] | null = null;
   isLoading = false;
+  search = '';
   totalItems = 0;
   itemsPerPage = ITEMS_PER_PAGE;
   page!: number;
@@ -58,6 +73,18 @@ export default class UserManagementComponent implements OnInit {
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {
       if (reason === 'deleted') {
+        this.loadAll();
+      }
+    });
+  }
+
+  createOrEdite(user?: User): void {
+    const modalRef = this.modalService.open(UserManagementUpdateComponent, { size: 'lg', backdrop: 'static' });
+    if (user) {
+      modalRef.componentInstance.user = user;
+    }
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'success') {
         this.loadAll();
       }
     });

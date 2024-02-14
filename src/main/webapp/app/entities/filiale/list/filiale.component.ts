@@ -15,6 +15,7 @@ import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/conf
 import { IFiliale } from '../filiale.model';
 import { EntityArrayResponseType, FilialeService } from '../service/filiale.service';
 import { FilialeDeleteDialogComponent } from '../delete/filiale-delete-dialog.component';
+import { FilialeUpdateComponent } from '../update/filiale-update.component';
 
 @Component({
   standalone: true,
@@ -70,6 +71,17 @@ export class FilialeComponent implements OnInit {
           this.onResponseSuccess(res);
         },
       });
+  }
+  createOrEdite(filiale?: IFiliale): void {
+    const modalRef = this.modalService.open(FilialeUpdateComponent, { size: 'lg', backdrop: 'static' });
+    if (filiale) {
+      modalRef.componentInstance.filiale = filiale;
+    }
+    modalRef.result.then(rs => {
+      if (rs === 'success') {
+        this.load();
+      }
+    });
   }
 
   load(): void {
