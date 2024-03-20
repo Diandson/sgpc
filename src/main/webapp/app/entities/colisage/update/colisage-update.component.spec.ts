@@ -50,10 +50,10 @@ describe('Colisage Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Personne query and add missing value', () => {
       const colisage: IColisage = { id: 456 };
-      const personne: IPersonne = { id: 19926 };
+      const personne: IPersonne = { id: 29840 };
       colisage.personne = personne;
 
-      const personneCollection: IPersonne[] = [{ id: 28518 }];
+      const personneCollection: IPersonne[] = [{ id: 12611 }];
       jest.spyOn(personneService, 'query').mockReturnValue(of(new HttpResponse({ body: personneCollection })));
       const additionalPersonnes = [personne];
       const expectedCollection: IPersonne[] = [...additionalPersonnes, ...personneCollection];
@@ -72,7 +72,7 @@ describe('Colisage Management Update Component', () => {
 
     it('Should update editForm', () => {
       const colisage: IColisage = { id: 456 };
-      const personne: IPersonne = { id: 27687 };
+      const personne: IPersonne = { id: 7277 };
       colisage.personne = personne;
 
       activatedRoute.data = of({ colisage });

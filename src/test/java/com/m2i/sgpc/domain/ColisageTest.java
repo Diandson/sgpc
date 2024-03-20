@@ -3,6 +3,7 @@ package com.m2i.sgpc.domain;
 import static com.m2i.sgpc.domain.ColisageTestSamples.*;
 import static com.m2i.sgpc.domain.EmailTestSamples.*;
 import static com.m2i.sgpc.domain.PersonneTestSamples.*;
+import static com.m2i.sgpc.domain.ProductionTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.m2i.sgpc.web.rest.TestUtil;
@@ -58,5 +59,27 @@ class ColisageTest {
 
         colisage.personne(null);
         assertThat(colisage.getPersonne()).isNull();
+    }
+
+    @Test
+    void productionTest() throws Exception {
+        Colisage colisage = getColisageRandomSampleGenerator();
+        Production productionBack = getProductionRandomSampleGenerator();
+
+        colisage.addProduction(productionBack);
+        assertThat(colisage.getProductions()).containsOnly(productionBack);
+        assertThat(productionBack.getColisage()).isEqualTo(colisage);
+
+        colisage.removeProduction(productionBack);
+        assertThat(colisage.getProductions()).doesNotContain(productionBack);
+        assertThat(productionBack.getColisage()).isNull();
+
+        colisage.productions(new HashSet<>(Set.of(productionBack)));
+        assertThat(colisage.getProductions()).containsOnly(productionBack);
+        assertThat(productionBack.getColisage()).isEqualTo(colisage);
+
+        colisage.setProductions(new HashSet<>());
+        assertThat(colisage.getProductions()).doesNotContain(productionBack);
+        assertThat(productionBack.getColisage()).isNull();
     }
 }

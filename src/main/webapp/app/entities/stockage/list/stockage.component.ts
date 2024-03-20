@@ -15,6 +15,7 @@ import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/conf
 import { IStockage } from '../stockage.model';
 import { EntityArrayResponseType, StockageService } from '../service/stockage.service';
 import { StockageDeleteDialogComponent } from '../delete/stockage-delete-dialog.component';
+import { StockageUpdateComponent } from '../update/stockage-update.component';
 
 @Component({
   standalone: true,
@@ -70,6 +71,18 @@ export class StockageComponent implements OnInit {
           this.onResponseSuccess(res);
         },
       });
+  }
+
+  createOrEdit(stockage?: IStockage) {
+    const modalRef = this.modalService.open(StockageUpdateComponent, { size: 'lg', backdrop: 'static' });
+    if (stockage) {
+      modalRef.componentInstance.stockage = stockage;
+    }
+    modalRef.result.then(rs => {
+      if (rs === 'success') {
+        this.load();
+      }
+    });
   }
 
   load(): void {

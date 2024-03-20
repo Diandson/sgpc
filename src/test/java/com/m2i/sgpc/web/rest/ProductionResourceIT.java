@@ -51,7 +51,7 @@ class ProductionResourceIT {
     private static final Boolean UPDATED_FINISH = true;
 
     private static final ETATPRODUCTION DEFAULT_ETAT = ETATPRODUCTION.ATTENTE;
-    private static final ETATPRODUCTION UPDATED_ETAT = ETATPRODUCTION.EN_COURS;
+    private static final ETATPRODUCTION UPDATED_ETAT = ETATPRODUCTION.PRODUCTION;
 
     private static final String DEFAULT_VALIDER_PAR = "AAAAAAAAAA";
     private static final String UPDATED_VALIDER_PAR = "BBBBBBBBBB";
@@ -73,6 +73,19 @@ class ProductionResourceIT {
 
     private static final ZonedDateTime DEFAULT_DATE_CREATION = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_DATE_CREATION = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+
+    private static final byte[] DEFAULT_FICHIER_CONTROLE = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_FICHIER_CONTROLE = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_FICHIER_CONTROLE_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_FICHIER_CONTROLE_CONTENT_TYPE = "image/png";
+
+    private static final byte[] DEFAULT_FICHIER_RECEPTION = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_FICHIER_RECEPTION = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_FICHIER_RECEPTION_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_FICHIER_RECEPTION_CONTENT_TYPE = "image/png";
+
+    private static final Boolean DEFAULT_FINISHED = false;
+    private static final Boolean UPDATED_FINISHED = true;
 
     private static final String ENTITY_API_URL = "/api/productions";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -113,7 +126,12 @@ class ProductionResourceIT {
             .dateFin(DEFAULT_DATE_FIN)
             .dateValider(DEFAULT_DATE_VALIDER)
             .dateOuvert(DEFAULT_DATE_OUVERT)
-            .dateCreation(DEFAULT_DATE_CREATION);
+            .dateCreation(DEFAULT_DATE_CREATION)
+            .fichierControle(DEFAULT_FICHIER_CONTROLE)
+            .fichierControleContentType(DEFAULT_FICHIER_CONTROLE_CONTENT_TYPE)
+            .fichierReception(DEFAULT_FICHIER_RECEPTION)
+            .fichierReceptionContentType(DEFAULT_FICHIER_RECEPTION_CONTENT_TYPE)
+            .finished(DEFAULT_FINISHED);
         return production;
     }
 
@@ -136,7 +154,12 @@ class ProductionResourceIT {
             .dateFin(UPDATED_DATE_FIN)
             .dateValider(UPDATED_DATE_VALIDER)
             .dateOuvert(UPDATED_DATE_OUVERT)
-            .dateCreation(UPDATED_DATE_CREATION);
+            .dateCreation(UPDATED_DATE_CREATION)
+            .fichierControle(UPDATED_FICHIER_CONTROLE)
+            .fichierControleContentType(UPDATED_FICHIER_CONTROLE_CONTENT_TYPE)
+            .fichierReception(UPDATED_FICHIER_RECEPTION)
+            .fichierReceptionContentType(UPDATED_FICHIER_RECEPTION_CONTENT_TYPE)
+            .finished(UPDATED_FINISHED);
         return production;
     }
 
@@ -171,6 +194,11 @@ class ProductionResourceIT {
         assertThat(testProduction.getDateValider()).isEqualTo(DEFAULT_DATE_VALIDER);
         assertThat(testProduction.getDateOuvert()).isEqualTo(DEFAULT_DATE_OUVERT);
         assertThat(testProduction.getDateCreation()).isEqualTo(DEFAULT_DATE_CREATION);
+        assertThat(testProduction.getFichierControle()).isEqualTo(DEFAULT_FICHIER_CONTROLE);
+        assertThat(testProduction.getFichierControleContentType()).isEqualTo(DEFAULT_FICHIER_CONTROLE_CONTENT_TYPE);
+        assertThat(testProduction.getFichierReception()).isEqualTo(DEFAULT_FICHIER_RECEPTION);
+        assertThat(testProduction.getFichierReceptionContentType()).isEqualTo(DEFAULT_FICHIER_RECEPTION_CONTENT_TYPE);
+        assertThat(testProduction.getFinished()).isEqualTo(DEFAULT_FINISHED);
     }
 
     @Test
@@ -215,7 +243,12 @@ class ProductionResourceIT {
             .andExpect(jsonPath("$.[*].dateFin").value(hasItem(DEFAULT_DATE_FIN.toString())))
             .andExpect(jsonPath("$.[*].dateValider").value(hasItem(sameInstant(DEFAULT_DATE_VALIDER))))
             .andExpect(jsonPath("$.[*].dateOuvert").value(hasItem(DEFAULT_DATE_OUVERT.toString())))
-            .andExpect(jsonPath("$.[*].dateCreation").value(hasItem(sameInstant(DEFAULT_DATE_CREATION))));
+            .andExpect(jsonPath("$.[*].dateCreation").value(hasItem(sameInstant(DEFAULT_DATE_CREATION))))
+            .andExpect(jsonPath("$.[*].fichierControleContentType").value(hasItem(DEFAULT_FICHIER_CONTROLE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].fichierControle").value(hasItem(Base64Utils.encodeToString(DEFAULT_FICHIER_CONTROLE))))
+            .andExpect(jsonPath("$.[*].fichierReceptionContentType").value(hasItem(DEFAULT_FICHIER_RECEPTION_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].fichierReception").value(hasItem(Base64Utils.encodeToString(DEFAULT_FICHIER_RECEPTION))))
+            .andExpect(jsonPath("$.[*].finished").value(hasItem(DEFAULT_FINISHED.booleanValue())));
     }
 
     @Test
@@ -241,7 +274,12 @@ class ProductionResourceIT {
             .andExpect(jsonPath("$.dateFin").value(DEFAULT_DATE_FIN.toString()))
             .andExpect(jsonPath("$.dateValider").value(sameInstant(DEFAULT_DATE_VALIDER)))
             .andExpect(jsonPath("$.dateOuvert").value(DEFAULT_DATE_OUVERT.toString()))
-            .andExpect(jsonPath("$.dateCreation").value(sameInstant(DEFAULT_DATE_CREATION)));
+            .andExpect(jsonPath("$.dateCreation").value(sameInstant(DEFAULT_DATE_CREATION)))
+            .andExpect(jsonPath("$.fichierControleContentType").value(DEFAULT_FICHIER_CONTROLE_CONTENT_TYPE))
+            .andExpect(jsonPath("$.fichierControle").value(Base64Utils.encodeToString(DEFAULT_FICHIER_CONTROLE)))
+            .andExpect(jsonPath("$.fichierReceptionContentType").value(DEFAULT_FICHIER_RECEPTION_CONTENT_TYPE))
+            .andExpect(jsonPath("$.fichierReception").value(Base64Utils.encodeToString(DEFAULT_FICHIER_RECEPTION)))
+            .andExpect(jsonPath("$.finished").value(DEFAULT_FINISHED.booleanValue()));
     }
 
     @Test
@@ -275,7 +313,12 @@ class ProductionResourceIT {
             .dateFin(UPDATED_DATE_FIN)
             .dateValider(UPDATED_DATE_VALIDER)
             .dateOuvert(UPDATED_DATE_OUVERT)
-            .dateCreation(UPDATED_DATE_CREATION);
+            .dateCreation(UPDATED_DATE_CREATION)
+            .fichierControle(UPDATED_FICHIER_CONTROLE)
+            .fichierControleContentType(UPDATED_FICHIER_CONTROLE_CONTENT_TYPE)
+            .fichierReception(UPDATED_FICHIER_RECEPTION)
+            .fichierReceptionContentType(UPDATED_FICHIER_RECEPTION_CONTENT_TYPE)
+            .finished(UPDATED_FINISHED);
         ProductionDTO productionDTO = productionMapper.toDto(updatedProduction);
 
         restProductionMockMvc
@@ -302,6 +345,11 @@ class ProductionResourceIT {
         assertThat(testProduction.getDateValider()).isEqualTo(UPDATED_DATE_VALIDER);
         assertThat(testProduction.getDateOuvert()).isEqualTo(UPDATED_DATE_OUVERT);
         assertThat(testProduction.getDateCreation()).isEqualTo(UPDATED_DATE_CREATION);
+        assertThat(testProduction.getFichierControle()).isEqualTo(UPDATED_FICHIER_CONTROLE);
+        assertThat(testProduction.getFichierControleContentType()).isEqualTo(UPDATED_FICHIER_CONTROLE_CONTENT_TYPE);
+        assertThat(testProduction.getFichierReception()).isEqualTo(UPDATED_FICHIER_RECEPTION);
+        assertThat(testProduction.getFichierReceptionContentType()).isEqualTo(UPDATED_FICHIER_RECEPTION_CONTENT_TYPE);
+        assertThat(testProduction.getFinished()).isEqualTo(UPDATED_FINISHED);
     }
 
     @Test
@@ -382,11 +430,14 @@ class ProductionResourceIT {
         partialUpdatedProduction.setId(production.getId());
 
         partialUpdatedProduction
-            .libelle(UPDATED_LIBELLE)
+            .finish(UPDATED_FINISH)
             .etat(UPDATED_ETAT)
-            .validerPar(UPDATED_VALIDER_PAR)
             .dateFin(UPDATED_DATE_FIN)
-            .dateOuvert(UPDATED_DATE_OUVERT);
+            .dateValider(UPDATED_DATE_VALIDER)
+            .dateCreation(UPDATED_DATE_CREATION)
+            .fichierControle(UPDATED_FICHIER_CONTROLE)
+            .fichierControleContentType(UPDATED_FICHIER_CONTROLE_CONTENT_TYPE)
+            .finished(UPDATED_FINISHED);
 
         restProductionMockMvc
             .perform(
@@ -400,18 +451,23 @@ class ProductionResourceIT {
         List<Production> productionList = productionRepository.findAll();
         assertThat(productionList).hasSize(databaseSizeBeforeUpdate);
         Production testProduction = productionList.get(productionList.size() - 1);
-        assertThat(testProduction.getLibelle()).isEqualTo(UPDATED_LIBELLE);
+        assertThat(testProduction.getLibelle()).isEqualTo(DEFAULT_LIBELLE);
         assertThat(testProduction.getFichier()).isEqualTo(DEFAULT_FICHIER);
         assertThat(testProduction.getFichierContentType()).isEqualTo(DEFAULT_FICHIER_CONTENT_TYPE);
-        assertThat(testProduction.getFinish()).isEqualTo(DEFAULT_FINISH);
+        assertThat(testProduction.getFinish()).isEqualTo(UPDATED_FINISH);
         assertThat(testProduction.getEtat()).isEqualTo(UPDATED_ETAT);
-        assertThat(testProduction.getValiderPar()).isEqualTo(UPDATED_VALIDER_PAR);
+        assertThat(testProduction.getValiderPar()).isEqualTo(DEFAULT_VALIDER_PAR);
         assertThat(testProduction.getDateDepot()).isEqualTo(DEFAULT_DATE_DEPOT);
         assertThat(testProduction.getDateDebut()).isEqualTo(DEFAULT_DATE_DEBUT);
         assertThat(testProduction.getDateFin()).isEqualTo(UPDATED_DATE_FIN);
-        assertThat(testProduction.getDateValider()).isEqualTo(DEFAULT_DATE_VALIDER);
-        assertThat(testProduction.getDateOuvert()).isEqualTo(UPDATED_DATE_OUVERT);
-        assertThat(testProduction.getDateCreation()).isEqualTo(DEFAULT_DATE_CREATION);
+        assertThat(testProduction.getDateValider()).isEqualTo(UPDATED_DATE_VALIDER);
+        assertThat(testProduction.getDateOuvert()).isEqualTo(DEFAULT_DATE_OUVERT);
+        assertThat(testProduction.getDateCreation()).isEqualTo(UPDATED_DATE_CREATION);
+        assertThat(testProduction.getFichierControle()).isEqualTo(UPDATED_FICHIER_CONTROLE);
+        assertThat(testProduction.getFichierControleContentType()).isEqualTo(UPDATED_FICHIER_CONTROLE_CONTENT_TYPE);
+        assertThat(testProduction.getFichierReception()).isEqualTo(DEFAULT_FICHIER_RECEPTION);
+        assertThat(testProduction.getFichierReceptionContentType()).isEqualTo(DEFAULT_FICHIER_RECEPTION_CONTENT_TYPE);
+        assertThat(testProduction.getFinished()).isEqualTo(UPDATED_FINISHED);
     }
 
     @Test
@@ -438,7 +494,12 @@ class ProductionResourceIT {
             .dateFin(UPDATED_DATE_FIN)
             .dateValider(UPDATED_DATE_VALIDER)
             .dateOuvert(UPDATED_DATE_OUVERT)
-            .dateCreation(UPDATED_DATE_CREATION);
+            .dateCreation(UPDATED_DATE_CREATION)
+            .fichierControle(UPDATED_FICHIER_CONTROLE)
+            .fichierControleContentType(UPDATED_FICHIER_CONTROLE_CONTENT_TYPE)
+            .fichierReception(UPDATED_FICHIER_RECEPTION)
+            .fichierReceptionContentType(UPDATED_FICHIER_RECEPTION_CONTENT_TYPE)
+            .finished(UPDATED_FINISHED);
 
         restProductionMockMvc
             .perform(
@@ -464,6 +525,11 @@ class ProductionResourceIT {
         assertThat(testProduction.getDateValider()).isEqualTo(UPDATED_DATE_VALIDER);
         assertThat(testProduction.getDateOuvert()).isEqualTo(UPDATED_DATE_OUVERT);
         assertThat(testProduction.getDateCreation()).isEqualTo(UPDATED_DATE_CREATION);
+        assertThat(testProduction.getFichierControle()).isEqualTo(UPDATED_FICHIER_CONTROLE);
+        assertThat(testProduction.getFichierControleContentType()).isEqualTo(UPDATED_FICHIER_CONTROLE_CONTENT_TYPE);
+        assertThat(testProduction.getFichierReception()).isEqualTo(UPDATED_FICHIER_RECEPTION);
+        assertThat(testProduction.getFichierReceptionContentType()).isEqualTo(UPDATED_FICHIER_RECEPTION_CONTENT_TYPE);
+        assertThat(testProduction.getFinished()).isEqualTo(UPDATED_FINISHED);
     }
 
     @Test

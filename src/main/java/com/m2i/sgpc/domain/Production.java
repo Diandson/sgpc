@@ -64,6 +64,23 @@ public class Production implements Serializable {
     @Column(name = "date_creation")
     private ZonedDateTime dateCreation;
 
+    @Lob
+    @Column(name = "fichier_controle")
+    private byte[] fichierControle;
+
+    @Column(name = "fichier_controle_content_type")
+    private String fichierControleContentType;
+
+    @Lob
+    @Column(name = "fichier_reception")
+    private byte[] fichierReception;
+
+    @Column(name = "fichier_reception_content_type")
+    private String fichierReceptionContentType;
+
+    @Column(name = "finished")
+    private Boolean finished;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(
         value = { "productions", "stockages", "colisages", "emails", "filiale", "user", "producteurs", "receveurs" },
@@ -84,6 +101,10 @@ public class Production implements Serializable {
         allowSetters = true
     )
     private Personne receveur;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "emails", "personne", "productions" }, allowSetters = true)
+    private Colisage colisage;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -256,6 +277,71 @@ public class Production implements Serializable {
         this.dateCreation = dateCreation;
     }
 
+    public byte[] getFichierControle() {
+        return this.fichierControle;
+    }
+
+    public Production fichierControle(byte[] fichierControle) {
+        this.setFichierControle(fichierControle);
+        return this;
+    }
+
+    public void setFichierControle(byte[] fichierControle) {
+        this.fichierControle = fichierControle;
+    }
+
+    public String getFichierControleContentType() {
+        return this.fichierControleContentType;
+    }
+
+    public Production fichierControleContentType(String fichierControleContentType) {
+        this.fichierControleContentType = fichierControleContentType;
+        return this;
+    }
+
+    public void setFichierControleContentType(String fichierControleContentType) {
+        this.fichierControleContentType = fichierControleContentType;
+    }
+
+    public byte[] getFichierReception() {
+        return this.fichierReception;
+    }
+
+    public Production fichierReception(byte[] fichierReception) {
+        this.setFichierReception(fichierReception);
+        return this;
+    }
+
+    public void setFichierReception(byte[] fichierReception) {
+        this.fichierReception = fichierReception;
+    }
+
+    public String getFichierReceptionContentType() {
+        return this.fichierReceptionContentType;
+    }
+
+    public Production fichierReceptionContentType(String fichierReceptionContentType) {
+        this.fichierReceptionContentType = fichierReceptionContentType;
+        return this;
+    }
+
+    public void setFichierReceptionContentType(String fichierReceptionContentType) {
+        this.fichierReceptionContentType = fichierReceptionContentType;
+    }
+
+    public Boolean getFinished() {
+        return this.finished;
+    }
+
+    public Production finished(Boolean finished) {
+        this.setFinished(finished);
+        return this;
+    }
+
+    public void setFinished(Boolean finished) {
+        this.finished = finished;
+    }
+
     public Personne getPersonne() {
         return this.personne;
     }
@@ -295,6 +381,19 @@ public class Production implements Serializable {
         return this;
     }
 
+    public Colisage getColisage() {
+        return this.colisage;
+    }
+
+    public void setColisage(Colisage colisage) {
+        this.colisage = colisage;
+    }
+
+    public Production colisage(Colisage colisage) {
+        this.setColisage(colisage);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -331,6 +430,11 @@ public class Production implements Serializable {
             ", dateValider='" + getDateValider() + "'" +
             ", dateOuvert='" + getDateOuvert() + "'" +
             ", dateCreation='" + getDateCreation() + "'" +
+            ", fichierControle='" + getFichierControle() + "'" +
+            ", fichierControleContentType='" + getFichierControleContentType() + "'" +
+            ", fichierReception='" + getFichierReception() + "'" +
+            ", fichierReceptionContentType='" + getFichierReceptionContentType() + "'" +
+            ", finished='" + getFinished() + "'" +
             "}";
     }
 }

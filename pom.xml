@@ -884,8 +884,8 @@
                 <spring.profiles.active>dev${profile.tls}${profile.no-liquibase}</spring.profiles.active>
                 <profile.test>testdev</profile.test>
                 <liquibase-plugin.url>jdbc:postgresql://localhost:5432/SGPC</liquibase-plugin.url>
-                <liquibase-plugin.username>SGPC</liquibase-plugin.username>
-                <liquibase-plugin.password/>
+                <liquibase-plugin.username>postgres</liquibase-plugin.username>
+                <liquibase-plugin.password>root</liquibase-plugin.password>
             </properties>
             <dependencies>
                 <dependency>

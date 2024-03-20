@@ -1,5 +1,6 @@
 import dayjs from 'dayjs/esm';
 import { IPersonne } from 'app/entities/personne/personne.model';
+import { IColisage } from 'app/entities/colisage/colisage.model';
 import { ETATPRODUCTION } from 'app/entities/enumerations/etatproduction.model';
 
 export interface IProduction {
@@ -16,9 +17,15 @@ export interface IProduction {
   dateValider?: dayjs.Dayjs | null;
   dateOuvert?: dayjs.Dayjs | null;
   dateCreation?: dayjs.Dayjs | null;
+  fichierControle?: string | null;
+  fichierControleContentType?: string | null;
+  fichierReception?: string | null;
+  fichierReceptionContentType?: string | null;
+  finished?: boolean | null;
   personne?: Pick<IPersonne, 'id' | 'nom' | 'prenom'> | null;
   producteur?: Pick<IPersonne, 'id' | 'nom' | 'prenom'> | null;
   receveur?: Pick<IPersonne, 'id' | 'nom' | 'prenom'> | null;
+  colisage?: Pick<IColisage, 'id' | 'canal'> | null;
 }
 
 export type NewProduction = Omit<IProduction, 'id'> & { id: null };

@@ -1,5 +1,6 @@
 package com.m2i.sgpc.service;
 
+import com.m2i.sgpc.domain.Personne;
 import com.m2i.sgpc.domain.Production;
 import com.m2i.sgpc.domain.enumeration.ETATPRODUCTION;
 import com.m2i.sgpc.repository.PersonneRepository;
@@ -7,6 +8,7 @@ import com.m2i.sgpc.repository.ProductionRepository;
 import com.m2i.sgpc.security.SecurityUtils;
 import com.m2i.sgpc.service.dto.ProductionDTO;
 import com.m2i.sgpc.service.mapper.ProductionMapper;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -48,7 +50,7 @@ public class ProductionService {
         log.debug("Request to save Production : {}", productionDTO);
         Production production = productionMapper.toEntity(productionDTO);
         production.setEtat(ETATPRODUCTION.ATTENTE);
-        production.setPersonne(personneRepository.findByUserLogin(SecurityUtils.getCurrentUserLogin().get()));
+        production.setPersonne(personneRepository.findByUserLogin(SecurityUtils.getCurrentUserLogin().orElseThrow()));
         production.setDateCreation(ZonedDateTime.now());
         production = productionRepository.save(production);
         return productionMapper.toDto(production);
@@ -63,6 +65,17 @@ public class ProductionService {
     public ProductionDTO update(ProductionDTO productionDTO) {
         log.debug("Request to update Production : {}", productionDTO);
         Production production = productionMapper.toEntity(productionDTO);
+        if (production.getFichierReception() != null) {
+            production.setDateFin(LocalDate.now());
+            production.setEtat(ETATPRODUCTION.COURRIER);
+            production.setProducteur(personneRepository.findByUserLogin(SecurityUtils.getCurrentUserLogin().orElseThrow()));
+        } else {
+            Personne personne = personneRepository.findByUserLogin(SecurityUtils.getCurrentUserLogin().orElseThrow());
+            production.setValiderPar(personne.getPrenom() + " " + personne.getNom());
+            production.setDateValider(ZonedDateTime.now());
+            production.setEtat(ETATPRODUCTION.PRODUCTION);
+        }
+
         production = productionRepository.save(production);
         return productionMapper.toDto(production);
     }

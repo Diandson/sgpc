@@ -5,7 +5,7 @@ package com.m2i.sgpc.domain.enumeration;
  */
 public enum ETATPRODUCTION {
     ATTENTE,
-    EN_COURS,
+    PRODUCTION,
     VALIDATION,
     COURRIER,
     VERIFICATION,

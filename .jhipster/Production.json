@@ -20,7 +20,7 @@
     {
       "fieldName": "etat",
       "fieldType": "ETATPRODUCTION",
-      "fieldValues": "ATTENTE,EN_COURS,VALIDATION,COURRIER,VERIFICATION,TERMINER"
+      "fieldValues": "ATTENTE,PRODUCTION,VALIDATION,COURRIER,VERIFICATION,TERMINER"
     },
     {
       "fieldName": "validerPar",
@@ -49,6 +49,20 @@
     {
       "fieldName": "dateCreation",
       "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "fichierControle",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "fichierReception",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "finished",
+      "fieldType": "Boolean"
     }
   ],
   "name": "Production",
@@ -73,6 +87,14 @@
       "otherEntityName": "personne",
       "otherEntityRelationshipName": "receveur",
       "relationshipName": "receveur",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "colisage",
+      "otherEntityRelationshipName": "production",
+      "relationshipName": "colisage",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     }

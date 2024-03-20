@@ -9,7 +9,7 @@ export const MENU: MenuItem[] = [
   {
     id: 1,
     label: 'Parametres',
-    icon: 'bx-user-circle',
+    icon: 'fa-cog',
     subItems: [
       {
         id: 2,
@@ -28,12 +28,12 @@ export const MENU: MenuItem[] = [
   {
     id: 4,
     label: 'COMPTES',
-    icon: 'bx-user',
+    icon: 'fa-user',
     subItems: [
       {
         id: 5,
         label: 'Utilisateurs',
-        icon: 'bx-user',
+        icon: 'fa-user',
         link: '/admin/user-management',
         parentId: 4,
       },
@@ -48,19 +48,25 @@ export const MENU: MenuItem[] = [
   {
     id: 7,
     label: 'Productions',
-    icon: 'bx-calendar',
+    icon: 'fa-calendar',
     link: '/production',
   },
   {
     id: 8,
-    label: 'Colis',
-    icon: 'bx-layout',
+    label: 'Colisage',
+    icon: 'fa-envelope',
     link: '/colisage',
+  },
+  {
+    id: 8,
+    label: 'Mails',
+    icon: 'fa-envelope',
+    link: '/email',
   },
   {
     id: 9,
     label: 'Stockage',
-    icon: 'bx-server',
+    icon: 'fa-server',
     link: '/stockage',
   },
 ];
@@ -73,13 +79,38 @@ export const MENU_USER: MenuItem[] = [
   {
     id: 2,
     label: 'Productions',
-    icon: 'bx-calendar',
+    icon: 'fa-calendar',
     link: '/production',
   },
   {
     id: 2,
-    label: 'Colis',
-    icon: 'bx-calendar',
+    label: 'Colisage',
+    icon: 'fa-envelope',
     link: '/colisage',
+  },
+];
+export const MENU_PROD: MenuItem[] = [
+  {
+    id: 1,
+    label: 'OPERATIONS',
+    isTitle: true,
+  },
+  {
+    id: 2,
+    label: 'Productions',
+    icon: 'fa-calendar',
+    link: '/production',
+  },
+  {
+    id: 2,
+    label: 'Colisage',
+    icon: 'fa-envelope',
+    link: '/colisage',
+  },
+  {
+    id: 3,
+    label: 'Stockage',
+    icon: 'fa-server',
+    link: '/stockage',
   },
 ];

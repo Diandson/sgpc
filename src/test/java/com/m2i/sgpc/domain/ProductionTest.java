@@ -1,5 +1,6 @@
 package com.m2i.sgpc.domain;
 
+import static com.m2i.sgpc.domain.ColisageTestSamples.*;
 import static com.m2i.sgpc.domain.PersonneTestSamples.*;
 import static com.m2i.sgpc.domain.ProductionTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -57,5 +58,17 @@ class ProductionTest {
 
         production.receveur(null);
         assertThat(production.getReceveur()).isNull();
+    }
+
+    @Test
+    void colisageTest() throws Exception {
+        Production production = getProductionRandomSampleGenerator();
+        Colisage colisageBack = getColisageRandomSampleGenerator();
+
+        production.setColisage(colisageBack);
+        assertThat(production.getColisage()).isEqualTo(colisageBack);
+
+        production.colisage(null);
+        assertThat(production.getColisage()).isNull();
     }
 }

@@ -2,6 +2,8 @@ package com.m2i.sgpc.service.dto;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -23,6 +25,8 @@ public class ColisageDTO implements Serializable {
     private ZonedDateTime dateCreation;
 
     private PersonneDTO personne;
+
+    private List<ProductionDTO> productionList = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -78,6 +82,14 @@ public class ColisageDTO implements Serializable {
 
     public void setPersonne(PersonneDTO personne) {
         this.personne = personne;
+    }
+
+    public List<ProductionDTO> getProductionList() {
+        return productionList;
+    }
+
+    public void setProductionList(List<ProductionDTO> productionList) {
+        this.productionList = productionList;
     }
 
     @Override

@@ -1,69 +1,119 @@
 <div *jhiHasAnyAuthority="[auth.DEPOT]">
   <h2 class="alert alert-light"><span>Détail de production</span> [[ {{ production!.libelle }} ]]</h2>
 
+  <hr />
   <div class="col-12">
     <div class="row">
-      <div class="col-4">
+      <div class="col-6">
         <div *ngIf="production">
-          <hr />
-
           <jhi-alert-error></jhi-alert-error>
 
           <jhi-alert></jhi-alert>
 
-          <dl class="row-md jh-entity-details">
-            <dt><span jhiTranslate="sgpcApp.production.fichier">Fichier</span></dt>
-            <dd>
-              <div *ngIf="production.fichier">
-                <a (click)="openFile(production.fichier, production.fichierContentType)" jhiTranslate="entity.action.open">Ouvrir</a>
+          <ul class="list-group">
+            <li class="list-group-item text-end">
+              <span *ngIf="production.fichier">
+                <a class="btn btn-sm btn-info" (click)="openFile(production.fichier, production.fichierContentType)">Ouvrir</a>
                 {{ production.fichierContentType }}, {{ byteSize(production.fichier) }}
-              </div>
-            </dd>
-
-            <dt><span jhiTranslate="sgpcApp.production.etat">Etat</span></dt>
-            <dd>
-              <span jhiTranslate="{{ 'sgpcApp.ETATPRODUCTION.' + production.etat }}">
-                {{ production.etat }}
               </span>
-            </dd>
-            <dt><span>Valider Par</span></dt>
-            <dd>
-              <span>{{ production.validerPar }}</span>
-            </dd>
-            <dt><span>Déposer le</span></dt>
-            <dd>
-              <span>{{ production.dateDepot | formatMediumDate }}</span>
-            </dd>
+              <span class="float-start mt-2">Fichier de production </span>
+            </li>
+            <li class="list-group-item text-end">
+              <span>
+                <nz-tag nzColor="processing" *ngIf="production.etat === 'ATTENTE'">
+                  <span nz-icon nzType="sync" nzSpin></span>
+                  <span>{{ production.etat }}</span>
+                </nz-tag>
+                <nz-tag nzColor="geekblue" *ngIf="production.etat === 'PRODUCTION'">
+                  <span nz-icon nzType="sync" nzSpin></span>
+                  <span>{{ production.etat }}</span>
+                </nz-tag>
+                <nz-tag nzColor="cyan" *ngIf="production.etat === 'COURRIER'">
+                  <span nz-icon nzType="sync" nzSpin></span>
+                  <span>{{ production.etat }}</span>
+                </nz-tag>
+                <nz-tag nzColor="success" *ngIf="production.etat === 'TERMINER'">
+                  <span nz-icon nzType="check-circle" nzSpin></span>
+                  <span>{{ production.etat }}</span>
+                </nz-tag>
+              </span>
+              <span class="float-start mt-2">État de production </span>
+            </li>
 
-            <dt><span>Terminer le</span></dt>
-            <dd>
-              <span>{{ production.dateFin | formatMediumDate }}</span>
-            </dd>
-            <dt><span>Valider le</span></dt>
-            <dd>
-              <span>{{ production.dateValider | formatMediumDatetime }}</span>
-            </dd>
+            <li class="list-group-item text-end">
+              {{ production.dateDepot | formatMediumDate }}
+              <span class="float-start mt-2">Déposer le </span>
+            </li>
 
-            <dt><span>Produit par</span></dt>
-            <dd>
-              <div *ngIf="production.producteur">
-                <a [routerLink]="['/personne', production.producteur.id, 'view']">
-                  {{ production.producteur!.nom + ' ' + production!.personne!.prenom }}</a
-                >
-              </div>
-            </dd>
-          </dl>
+            <li class="list-group-item text-end">
+              <span *ngIf="production.personne">
+                <a [routerLink]="['/personne', production.personne.id, 'view']">
+                  {{ production.personne.nom + ' ' + production.personne.prenom }}
+                </a>
+              </span>
+              <span class="float-start mt-2">Déposer par </span>
+            </li>
+          </ul>
         </div>
+      </div>
+      <div class="col-6">
+        <ul class="list-group" *ngIf="production">
+          <li class="list-group-item text-end">
+            <span *ngIf="production.fichierReception">
+              <a class="btn btn-sm btn-info" (click)="openFile(production.fichierReception, production.fichierReceptionContentType)"
+                >Ouvrir</a
+              >
+              {{ production.fichierReceptionContentType }}, {{ byteSize(production.fichierReception) }}
+            </span>
+            <span class="float-start mt-2">Fichier final produit </span>
+          </li>
+          <li class="list-group-item text-end">
+            {{ production.validerPar }}
+            <span class="float-start mt-2">Valider Par </span>
+          </li>
+          <li class="list-group-item text-end">
+            {{ production.dateValider | formatMediumDate }}
+            <span class="float-start mt-2">Valider le </span>
+          </li>
+
+          <li class="list-group-item text-end">
+            {{ production.dateFin | formatMediumDate }}
+            <span class="float-start mt-2">Terminer le </span>
+          </li>
+
+          <li class="list-group-item text-end" *ngIf="production.producteur">
+            <span>
+              <a [routerLink]="['/personne', production.producteur.id, 'view']">
+                {{ production.producteur!.nom + ' ' + production!.producteur!.prenom }}</a
+              >
+            </span>
+            <span class="float-start mt-2">Produit par </span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
+  <ul class="list-group" *ngIf="production?.etat === 'TERMINER'">
+    <li class="list-group-item text-end">
+      <span class="badge bg-success p-2">
+        <strong>{{ production!.dateCreation | dateAgo }}</strong></span
+      >
+      <span class="float-start mt-2"> Temps de production estimé </span>
+    </li>
+  </ul>
+  <hr />
 
-  <div class="alert alert-light">
+  <div class="d-flex justify-content-between alert alert-light">
     <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
     </button>
 
-    <button type="button" class="btn btn-primary" *ngIf="production!.etat === 'VERIFICATION'">
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="valideReception()"
+      *ngIf="production!.colisage && production!.etat !== 'TERMINER'"
+    >
       <span>Valider la reception</span>
     </button>
   </div>
@@ -72,147 +122,238 @@
 <div *jhiHasAnyAuthority="[auth.PROD]">
   <h2 class="alert alert-light"><span>Détail de production</span> [[ {{ production!.libelle }} ]]</h2>
 
+  <hr />
   <div class="col-12">
     <div class="row">
-      <div class="col-4">
+      <div class="col-6">
         <div *ngIf="production">
-          <hr />
-
           <jhi-alert-error></jhi-alert-error>
 
           <jhi-alert></jhi-alert>
 
-          <dl class="row-md jh-entity-details">
-            <dt><span>Fichier de production</span></dt>
-            <dd>
-              <div *ngIf="production.fichier">
-                <a (click)="openFile(production.fichier, production.fichierContentType)" jhiTranslate="entity.action.open">Ouvrir</a>
+          <ul class="list-group">
+            <li class="list-group-item text-end">
+              <span *ngIf="production.fichier">
+                <a class="btn btn-sm btn-info" (click)="openFile(production.fichier, production.fichierContentType)">Ouvrir</a>
                 {{ production.fichierContentType }}, {{ byteSize(production.fichier) }}
-              </div>
-            </dd>
-
-            <dt><span jhiTranslate="sgpcApp.production.etat">Etat</span></dt>
-            <dd>
-              <span jhiTranslate="{{ 'sgpcApp.ETATPRODUCTION.' + production.etat }}">
-                {{ production.etat }}
               </span>
-            </dd>
-            <dt><span>Valider Par</span></dt>
-            <dd>
-              <span>{{ production.validerPar }}</span>
-            </dd>
-            <dt><span>Déposer le</span></dt>
-            <dd>
-              <span>{{ production.dateDepot | formatMediumDate }}</span>
-            </dd>
+              <span class="float-start mt-2">Fichier de production </span>
+            </li>
+            <li class="list-group-item text-end">
+              <span>
+                <nz-tag nzColor="processing" *ngIf="production.etat === 'ATTENTE'">
+                  <span nz-icon nzType="sync" nzSpin></span>
+                  <span>{{ production.etat }}</span>
+                </nz-tag>
+                <nz-tag nzColor="geekblue" *ngIf="production.etat === 'PRODUCTION'">
+                  <span nz-icon nzType="sync" nzSpin></span>
+                  <span>{{ production.etat }}</span>
+                </nz-tag>
+                <nz-tag nzColor="cyan" *ngIf="production.etat === 'COURRIER'">
+                  <span nz-icon nzType="sync" nzSpin></span>
+                  <span>{{ production.etat }}</span>
+                </nz-tag>
+                <nz-tag nzColor="success" *ngIf="production.etat === 'TERMINER'">
+                  <span nz-icon nzType="check-circle" nzSpin></span>
+                  <span>{{ production.etat }}</span>
+                </nz-tag>
+              </span>
+              <span class="float-start mt-2">État de production </span>
+            </li>
 
-            <dt><span>Terminer le</span></dt>
-            <dd>
-              <span>{{ production.dateFin | formatMediumDate }}</span>
-            </dd>
-            <dt><span>Valider le</span></dt>
-            <dd>
-              <span>{{ production.dateValider | formatMediumDatetime }}</span>
-            </dd>
-            <dt><span>Déposer par</span></dt>
-            <dd>
-              <div *ngIf="production.personne">
+            <li class="list-group-item text-end">
+              {{ production.dateDepot | formatMediumDate }}
+              <span class="float-start mt-2">Déposer le </span>
+            </li>
+
+            <li class="list-group-item text-end">
+              <span *ngIf="production.personne">
                 <a [routerLink]="['/personne', production.personne.id, 'view']">
-                  {{ production.producteur!.nom + ' ' + production!.personne!.prenom }}
+                  {{ production.personne.nom + ' ' + production.personne.prenom }}
                 </a>
-              </div>
-            </dd>
-          </dl>
+              </span>
+              <span class="float-start mt-2">Déposer par </span>
+            </li>
+          </ul>
         </div>
+      </div>
+      <div class="col-6">
+        <ul class="list-group" *ngIf="production">
+          <li class="list-group-item text-end">
+            <span *ngIf="production.fichierReception">
+              <a class="btn btn-sm btn-info" (click)="openFile(production.fichierReception, production.fichierReceptionContentType)"
+                >Ouvrir</a
+              >
+              {{ production.fichierReceptionContentType }}, {{ byteSize(production.fichierReception) }}
+            </span>
+            <span class="float-start mt-2">Fichier final produit </span>
+          </li>
+          <li class="list-group-item text-end">
+            {{ production.validerPar }}
+            <span class="float-start mt-2">Valider Par </span>
+          </li>
+          <li class="list-group-item text-end">
+            {{ production.dateValider | formatMediumDate }}
+            <span class="float-start mt-2">Valider le </span>
+          </li>
+
+          <li class="list-group-item text-end">
+            {{ production.dateFin | formatMediumDate }}
+            <span class="float-start mt-2">Terminer le </span>
+          </li>
+
+          <li class="list-group-item text-end" *ngIf="production.producteur">
+            <span>
+              <a [routerLink]="['/personne', production.producteur.id, 'view']">
+                {{ production.producteur!.nom + ' ' + production!.producteur!.prenom }}</a
+              >
+            </span>
+            <span class="float-start mt-2">Produit par </span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
+  <ul class="list-group" *ngIf="production?.etat === 'TERMINER'">
+    <li class="list-group-item text-end">
+      <span class="badge bg-success p-2">
+        <strong>{{ production!.dateCreation | dateAgo }}</strong></span
+      >
+      <span class="float-start mt-2"> Temps de production estimé </span>
+    </li>
+  </ul>
+  <hr />
 
-  <div class="alert alert-light">
+  <div class="d-flex justify-content-between alert alert-light">
     <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
     </button>
 
-    <button type="button" class="btn btn-primary" *ngIf="production!.validerPar">
+    <button type="button" class="btn btn-primary" *ngIf="!production!.validerPar">
       <span>Valider la production</span>
+    </button>
+
+    <button type="button" class="btn btn-primary" *ngIf="production!.validerPar && !production?.dateFin" (click)="showModal()">
+      <span>Terminer la production</span>
     </button>
   </div>
 </div>
 
-<div *jhiHasAnyAuthority="[auth.CHEF, auth.ADMIN, auth.FILIALE]">
+<div *jhiHasAnyAuthority="[auth.CHEF, auth.ADMIN]">
   <h2 class="alert alert-light"><span>Détail de production</span> [[ {{ production!.libelle }} ]]</h2>
 
+  <hr />
   <div class="col-12">
     <div class="row">
-      <div class="col-4">
+      <div class="col-6">
         <div *ngIf="production">
-          <hr />
-
           <jhi-alert-error></jhi-alert-error>
 
           <jhi-alert></jhi-alert>
 
-          <dl class="row-md jh-entity-details">
-            <dt><span>Fichier de production</span></dt>
-            <dd>
-              <div *ngIf="production.fichier">
-                <a (click)="openFile(production.fichier, production.fichierContentType)" jhiTranslate="entity.action.open">Ouvrir</a>
+          <ul class="list-group">
+            <li class="list-group-item text-end">
+              <span *ngIf="production.fichier">
+                <a class="btn btn-sm btn-info" (click)="openFile(production.fichier, production.fichierContentType)">Ouvrir</a>
                 {{ production.fichierContentType }}, {{ byteSize(production.fichier) }}
-              </div>
-            </dd>
-
-            <dt><span jhiTranslate="sgpcApp.production.etat">Etat</span></dt>
-            <dd>
-              <span jhiTranslate="{{ 'sgpcApp.ETATPRODUCTION.' + production.etat }}">
-                {{ production.etat }}
               </span>
-            </dd>
-            <dt><span>Valider Par</span></dt>
-            <dd>
-              <span>{{ production.validerPar }}</span>
-            </dd>
-            <dt><span>Déposer le</span></dt>
-            <dd>
-              <span>{{ production.dateDepot | formatMediumDate }}</span>
-            </dd>
+              <span class="float-start mt-2">Fichier de production </span>
+            </li>
+            <li class="list-group-item text-end">
+              <span>
+                <nz-tag nzColor="processing" *ngIf="production.etat === 'ATTENTE'">
+                  <span nz-icon nzType="sync" nzSpin></span>
+                  <span>{{ production.etat }}</span>
+                </nz-tag>
+                <nz-tag nzColor="geekblue" *ngIf="production.etat === 'PRODUCTION'">
+                  <span nz-icon nzType="sync" nzSpin></span>
+                  <span>{{ production.etat }}</span>
+                </nz-tag>
+                <nz-tag nzColor="cyan" *ngIf="production.etat === 'COURRIER'">
+                  <span nz-icon nzType="sync" nzSpin></span>
+                  <span>{{ production.etat }}</span>
+                </nz-tag>
+                <nz-tag nzColor="success" *ngIf="production.etat === 'TERMINER'">
+                  <span nz-icon nzType="check-circle" nzSpin></span>
+                  <span>{{ production.etat }}</span>
+                </nz-tag>
+              </span>
+              <span class="float-start mt-2">État de production </span>
+            </li>
 
-            <dt><span>Terminer le</span></dt>
-            <dd>
-              <span>{{ production.dateFin | formatMediumDate }}</span>
-            </dd>
-            <dt><span>Valider le</span></dt>
-            <dd>
-              <span>{{ production.dateValider | formatMediumDatetime }}</span>
-            </dd>
-            <dt><span>Déposer par</span></dt>
-            <dd>
-              <div *ngIf="production.personne">
+            <li class="list-group-item text-end">
+              {{ production.dateDepot | formatMediumDate }}
+              <span class="float-start mt-2">Déposer le </span>
+            </li>
+
+            <li class="list-group-item text-end">
+              <span *ngIf="production.personne">
                 <a [routerLink]="['/personne', production.personne.id, 'view']">
-                  {{ production.producteur!.nom + ' ' + production!.personne!.prenom }}
+                  {{ production.personne.nom + ' ' + production.personne.prenom }}
                 </a>
-              </div>
-            </dd>
-            <dt><span>Produit par</span></dt>
-            <dd>
-              <div *ngIf="production.producteur">
-                <a [routerLink]="['/personne', production.producteur.id, 'view']">
-                  {{ production.producteur!.nom + ' ' + production!.personne!.prenom }}</a
-                >
-              </div>
-            </dd>
-          </dl>
+              </span>
+              <span class="float-start mt-2">Déposer par </span>
+            </li>
+          </ul>
         </div>
+      </div>
+      <div class="col-6">
+        <ul class="list-group" *ngIf="production">
+          <li class="list-group-item text-end">
+            <span *ngIf="production.fichierReception">
+              <a class="btn btn-sm btn-info" (click)="openFile(production.fichierReception, production.fichierReceptionContentType)"
+                >Ouvrir</a
+              >
+              {{ production.fichierReceptionContentType }}, {{ byteSize(production.fichierReception) }}
+            </span>
+            <span class="float-start mt-2">Fichier final produit </span>
+          </li>
+          <li class="list-group-item text-end">
+            {{ production.validerPar }}
+            <span class="float-start mt-2">Valider Par </span>
+          </li>
+          <li class="list-group-item text-end">
+            {{ production.dateValider | formatMediumDate }}
+            <span class="float-start mt-2">Valider le </span>
+          </li>
+
+          <li class="list-group-item text-end">
+            {{ production.dateFin | formatMediumDate }}
+            <span class="float-start mt-2">Terminer le </span>
+          </li>
+
+          <li class="list-group-item text-end" *ngIf="production.producteur">
+            <span>
+              <a [routerLink]="['/personne', production.producteur.id, 'view']">
+                {{ production.producteur!.nom + ' ' + production!.producteur!.prenom }}</a
+              >
+            </span>
+            <span class="float-start mt-2">Produit par </span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
+  <ul class="list-group" *ngIf="production?.etat === 'TERMINER'">
+    <li class="list-group-item text-end">
+      <span class="badge bg-success p-2">
+        <strong>{{ production!.dateCreation | dateAgo }}</strong></span
+      >
+      <span class="float-start mt-2"> Temps de production estimé </span>
+    </li>
+  </ul>
+  <hr />
 
-  <div class="alert alert-light">
+  <div class="d-flex alert alert-light justify-content-between">
     <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
     </button>
 
-    <button type="button" class="btn btn-primary" *ngIf="production!.validerPar">
+    <button type="button" class="btn btn-primary" *ngIf="!production!.validerPar" (click)="validerProd()">
       <span>Valider la production</span>
+    </button>
+    <button type="button" class="btn btn-primary" *ngIf="production!.validerPar && !production?.dateFin" (click)="showModal()">
+      <span>Terminer la production</span>
     </button>
   </div>
 </div>

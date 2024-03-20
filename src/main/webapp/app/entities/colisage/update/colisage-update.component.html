@@ -12,7 +12,14 @@
     </div>
 
     <div class="form-group">
-      <label class="form-label" jhiTranslate="sgpcApp.colisage.destination" for="field_destination">Destination</label>
+      <label>Productions</label>
+      <select class="form-controlsel" multiple formControlName="productionList">
+        <option *ngFor="let production of productions" [value]="production">{{ production.libelle }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Destinataire email</label>
       <input
         type="text"
         class="form-control"
@@ -24,7 +31,7 @@
     </div>
 
     <div class="form-group">
-      <label class="form-label" jhiTranslate="sgpcApp.colisage.canal" for="field_canal">Canal</label>
+      <label class="form-label">Canal d'envoi</label>
       <input type="text" class="form-control" name="canal" id="field_canal" data-cy="canal" formControlName="canal" />
     </div>
   </div>

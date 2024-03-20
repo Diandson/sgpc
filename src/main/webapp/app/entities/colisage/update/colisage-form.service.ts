@@ -37,6 +37,7 @@ type ColisageFormGroupContent = {
   estRecu: FormControl<ColisageFormRawValue['estRecu']>;
   dateCreation: FormControl<ColisageFormRawValue['dateCreation']>;
   personne: FormControl<ColisageFormRawValue['personne']>;
+  productionList: FormControl<ColisageFormRawValue['productionList']>;
 };
 
 export type ColisageFormGroup = FormGroup<ColisageFormGroupContent>;
@@ -56,12 +57,13 @@ export class ColisageFormService {
           validators: [Validators.required],
         },
       ),
-      destination: new FormControl(colisageRawValue.destination),
-      canal: new FormControl(colisageRawValue.canal),
+      destination: new FormControl(colisageRawValue.destination, { validators: [Validators.required] }),
+      canal: new FormControl(colisageRawValue.canal, { validators: [Validators.required] }),
       recuPar: new FormControl(colisageRawValue.recuPar),
       estRecu: new FormControl(colisageRawValue.estRecu),
       dateCreation: new FormControl(colisageRawValue.dateCreation),
       personne: new FormControl(colisageRawValue.personne),
+      productionList: new FormControl(colisageRawValue.productionList, { validators: [Validators.required] }),
     });
   }
 

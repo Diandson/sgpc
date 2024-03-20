@@ -1,24 +1,18 @@
 <div>
-  <h2 id="page-heading" data-cy="StockageHeading">
-    <span jhiTranslate="sgpcApp.stockage.home.title">Stockages</span>
+  <div class="alert alert-light">
+    <h3 id="page-heading" data-cy="StockageHeading">
+      <span jhiTranslate="sgpcApp.stockage.home.title">Stockages</span>
 
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+      <button class="btn btn-info me-2 float-end" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="sgpcApp.stockage.home.refreshListLabel">Actualiser la liste</span>
       </button>
 
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-stockage"
-        [routerLink]="['/stockage/new']"
-      >
+      <button class="btn btn-primary jh-create-entity create-stockage float-end me-2" (click)="createOrEdit()">
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="sgpcApp.stockage.home.createLabel">Créer un nouveau Stockage</span>
+        <span>Nouveau</span>
       </button>
-    </div>
-  </h2>
+    </h3>
+  </div>
 
   <jhi-alert-error></jhi-alert-error>
 
@@ -32,46 +26,29 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span jhiTranslate="global.field.id">ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="denomination">
+          <th>
             <div class="d-flex">
               <span jhiTranslate="sgpcApp.stockage.denomination">Denomination</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="code">
+          <th>
             <div class="d-flex">
               <span jhiTranslate="sgpcApp.stockage.code">Code</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="quantite">
+          <th>
             <div class="d-flex">
               <span jhiTranslate="sgpcApp.stockage.quantite">Quantite</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="modifierPar">
+          <th>
             <div class="d-flex">
               <span jhiTranslate="sgpcApp.stockage.modifierPar">Modifier Par</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="dateCreation">
+          <th>
             <div class="d-flex">
               <span jhiTranslate="sgpcApp.stockage.dateCreation">Date Creation</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="personne.id">
-            <div class="d-flex">
-              <span jhiTranslate="sgpcApp.stockage.personne">Personne</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col"></th>
@@ -79,34 +56,25 @@
       </thead>
       <tbody>
         <tr *ngFor="let stockage of stockages; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/stockage', stockage.id, 'view']">{{ stockage.id }}</a>
-          </td>
           <td>{{ stockage.denomination }}</td>
           <td>{{ stockage.code }}</td>
           <td>{{ stockage.quantite }}</td>
           <td>{{ stockage.modifierPar }}</td>
           <td>{{ stockage.dateCreation | formatMediumDatetime }}</td>
-          <td>
-            <div *ngIf="stockage.personne">
-              <a [routerLink]="['/personne', stockage.personne.id, 'view']">{{ stockage.personne.id }}</a>
-            </div>
-          </td>
           <td class="text-end">
             <div class="btn-group">
-              <a [routerLink]="['/stockage', stockage.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Voir</span>
-              </a>
+              <!--            <a [routerLink]="['/stockage', stockage.id, 'view']" class="btn btn-info btn-sm"-->
+              <!--               data-cy="entityDetailsButton">-->
+              <!--              <fa-icon icon="eye"></fa-icon>-->
+              <!--              <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Voir</span>-->
+              <!--            </a>-->
 
               <a [routerLink]="['/stockage', stockage.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editer</span>
               </a>
 
               <button type="submit" (click)="delete(stockage)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Supprimer</span>
               </button>
             </div>
           </td>

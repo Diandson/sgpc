@@ -39,11 +39,24 @@ public class ProductionDTO implements Serializable {
 
     private ZonedDateTime dateCreation;
 
+    @Lob
+    private byte[] fichierControle;
+
+    private String fichierControleContentType;
+
+    @Lob
+    private byte[] fichierReception;
+
+    private String fichierReceptionContentType;
+    private Boolean finished;
+
     private PersonneDTO personne;
 
     private PersonneDTO producteur;
 
     private PersonneDTO receveur;
+
+    private ColisageDTO colisage;
 
     public Long getId() {
         return id;
@@ -149,6 +162,46 @@ public class ProductionDTO implements Serializable {
         this.dateCreation = dateCreation;
     }
 
+    public byte[] getFichierControle() {
+        return fichierControle;
+    }
+
+    public void setFichierControle(byte[] fichierControle) {
+        this.fichierControle = fichierControle;
+    }
+
+    public String getFichierControleContentType() {
+        return fichierControleContentType;
+    }
+
+    public void setFichierControleContentType(String fichierControleContentType) {
+        this.fichierControleContentType = fichierControleContentType;
+    }
+
+    public byte[] getFichierReception() {
+        return fichierReception;
+    }
+
+    public void setFichierReception(byte[] fichierReception) {
+        this.fichierReception = fichierReception;
+    }
+
+    public String getFichierReceptionContentType() {
+        return fichierReceptionContentType;
+    }
+
+    public void setFichierReceptionContentType(String fichierReceptionContentType) {
+        this.fichierReceptionContentType = fichierReceptionContentType;
+    }
+
+    public Boolean getFinished() {
+        return finished;
+    }
+
+    public void setFinished(Boolean finished) {
+        this.finished = finished;
+    }
+
     public PersonneDTO getPersonne() {
         return personne;
     }
@@ -171,6 +224,14 @@ public class ProductionDTO implements Serializable {
 
     public void setReceveur(PersonneDTO receveur) {
         this.receveur = receveur;
+    }
+
+    public ColisageDTO getColisage() {
+        return colisage;
+    }
+
+    public void setColisage(ColisageDTO colisage) {
+        this.colisage = colisage;
     }
 
     @Override
@@ -210,9 +271,13 @@ public class ProductionDTO implements Serializable {
             ", dateValider='" + getDateValider() + "'" +
             ", dateOuvert='" + getDateOuvert() + "'" +
             ", dateCreation='" + getDateCreation() + "'" +
+            ", fichierControle='" + getFichierControle() + "'" +
+            ", fichierReception='" + getFichierReception() + "'" +
+            ", finished='" + getFinished() + "'" +
             ", personne=" + getPersonne() +
             ", producteur=" + getProducteur() +
             ", receveur=" + getReceveur() +
+            ", colisage=" + getColisage() +
             "}";
     }
 }

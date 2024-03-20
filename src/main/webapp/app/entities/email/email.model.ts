@@ -8,8 +8,8 @@ export interface IEmail {
   contenu?: string | null;
   destinataire?: string | null;
   dateEnvoi?: dayjs.Dayjs | null;
-  colisage?: Pick<IColisage, 'id'> | null;
-  personne?: Pick<IPersonne, 'id'> | null;
+  colisage?: Pick<IColisage, 'id' | 'canal'> | null;
+  personne?: Pick<IPersonne, 'id' | 'nom' | 'prenom'> | null;
 }
 
 export type NewEmail = Omit<IEmail, 'id'> & { id: null };

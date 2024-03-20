@@ -1,24 +1,9 @@
 <div>
-  <h2 id="page-heading" data-cy="EmailHeading">
-    <span jhiTranslate="sgpcApp.email.home.title">Emails</span>
-
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="sgpcApp.email.home.refreshListLabel">Actualiser la liste</span>
-      </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-email"
-        [routerLink]="['/email/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="sgpcApp.email.home.createLabel">Créer un nouveau Email</span>
-      </button>
-    </div>
-  </h2>
+  <div class="alert alert-light">
+    <h2 id="page-heading" data-cy="EmailHeading">
+      <span>Emails envoyés</span>
+    </h2>
+  </div>
 
   <jhi-alert-error></jhi-alert-error>
 
@@ -32,86 +17,52 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span jhiTranslate="global.field.id">ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="objet">
+          <th>
             <div class="d-flex">
               <span jhiTranslate="sgpcApp.email.objet">Objet</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="contenu">
+          <th>
             <div class="d-flex">
               <span jhiTranslate="sgpcApp.email.contenu">Contenu</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="destinataire">
+          <th>
             <div class="d-flex">
               <span jhiTranslate="sgpcApp.email.destinataire">Destinataire</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="dateEnvoi">
+          <!--          <th >-->
+          <!--            <div class="d-flex">-->
+          <!--              <span >Date</span>-->
+          <!--              </div>-->
+          <!--          </th>-->
+          <!--          <th >-->
+          <!--            <div class="d-flex">-->
+          <!--              <span >Colis par</span>-->
+          <!--              </div>-->
+          <!--          </th>-->
+          <th>
             <div class="d-flex">
-              <span jhiTranslate="sgpcApp.email.dateEnvoi">Date Envoi</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
+              <span>Envoyer par</span>
             </div>
           </th>
-          <th scope="col" jhiSortBy="colisage.id">
-            <div class="d-flex">
-              <span jhiTranslate="sgpcApp.email.colisage">Colisage</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="personne.id">
-            <div class="d-flex">
-              <span jhiTranslate="sgpcApp.email.personne">Personne</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let email of emails; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/email', email.id, 'view']">{{ email.id }}</a>
-          </td>
           <td>{{ email.objet }}</td>
           <td>{{ email.contenu }}</td>
           <td>{{ email.destinataire }}</td>
-          <td>{{ email.dateEnvoi | formatMediumDatetime }}</td>
-          <td>
-            <div *ngIf="email.colisage">
-              <a [routerLink]="['/colisage', email.colisage.id, 'view']">{{ email.colisage.id }}</a>
-            </div>
-          </td>
+          <!--          <td>{{ email.dateEnvoi | formatMediumDatetime }}</td>-->
+          <!--          <td>-->
+          <!--            <div *ngIf="email.colisage">-->
+          <!--              <a >{{ email.colisage.canal }}</a>-->
+          <!--            </div>-->
+          <!--          </td>-->
           <td>
             <div *ngIf="email.personne">
-              <a [routerLink]="['/personne', email.personne.id, 'view']">{{ email.personne.id }}</a>
-            </div>
-          </td>
-          <td class="text-end">
-            <div class="btn-group">
-              <a [routerLink]="['/email', email.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Voir</span>
-              </a>
-
-              <a [routerLink]="['/email', email.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editer</span>
-              </a>
-
-              <button type="submit" (click)="delete(email)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Supprimer</span>
-              </button>
+              <a>{{ email.personne.nom + ' ' + email.personne.prenom }}</a>
             </div>
           </td>
         </tr>

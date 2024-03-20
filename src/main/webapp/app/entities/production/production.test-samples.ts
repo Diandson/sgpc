@@ -3,35 +3,39 @@ import dayjs from 'dayjs/esm';
 import { IProduction, NewProduction } from './production.model';
 
 export const sampleWithRequiredData: IProduction = {
-  id: 18715,
+  id: 12256,
 };
 
 export const sampleWithPartialData: IProduction = {
-  id: 16965,
-  fichier: '../fake-data/blob/hipster.png',
-  fichierContentType: 'unknown',
-  finish: false,
-  etat: 'COURRIER',
-  validerPar: 'sauf comme accumuler',
-  dateDebut: dayjs('2023-12-04'),
+  id: 18081,
+  libelle: 'au-dessous de citer en guise de',
+  finish: true,
+  validerPar: 'mélancolique aussi',
+  dateDepot: dayjs('2023-12-03'),
   dateFin: dayjs('2023-12-04'),
-  dateValider: dayjs('2023-12-03T16:46'),
+  dateValider: dayjs('2023-12-03T19:43'),
+  finished: false,
 };
 
 export const sampleWithFullData: IProduction = {
-  id: 31016,
-  libelle: 'sous',
+  id: 7004,
+  libelle: "à l'entour de dessous",
   fichier: '../fake-data/blob/hipster.png',
   fichierContentType: 'unknown',
   finish: true,
-  etat: 'TERMINER',
-  validerPar: 'spécialiste',
+  etat: 'VALIDATION',
+  validerPar: 'étant donné que',
   dateDepot: dayjs('2023-12-03'),
   dateDebut: dayjs('2023-12-04'),
-  dateFin: dayjs('2023-12-03'),
-  dateValider: dayjs('2023-12-04T00:37'),
-  dateOuvert: dayjs('2023-12-03'),
-  dateCreation: dayjs('2023-12-04T09:23'),
+  dateFin: dayjs('2023-12-04'),
+  dateValider: dayjs('2023-12-04T02:45'),
+  dateOuvert: dayjs('2023-12-04'),
+  dateCreation: dayjs('2023-12-04T03:13'),
+  fichierControle: '../fake-data/blob/hipster.png',
+  fichierControleContentType: 'unknown',
+  fichierReception: '../fake-data/blob/hipster.png',
+  fichierReceptionContentType: 'unknown',
+  finished: true,
 };
 
 export const sampleWithNewData: NewProduction = {

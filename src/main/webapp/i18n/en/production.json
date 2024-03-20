@@ -29,9 +29,13 @@
       "dateValider": "Date Valider",
       "dateOuvert": "Date Ouvert",
       "dateCreation": "Date Creation",
+      "fichierControle": "Fichier Controle",
+      "fichierReception": "Fichier Reception",
+      "finished": "Finished",
       "personne": "Personne",
       "producteur": "Producteur",
-      "receveur": "Receveur"
+      "receveur": "Receveur",
+      "colisage": "Colisage"
     }
   }
 }

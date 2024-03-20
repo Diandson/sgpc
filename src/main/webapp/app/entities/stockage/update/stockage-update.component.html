@@ -1,98 +1,47 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-stockage-heading" data-cy="StockageCreateUpdateHeading" jhiTranslate="sgpcApp.stockage.home.createOrEditLabel">
-        Créer ou éditer un Stockage
-      </h2>
-
-      <div>
-        <jhi-alert-error></jhi-alert-error>
-
-        <div class="form-group" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" jhiTranslate="sgpcApp.stockage.denomination" for="field_denomination">Denomination</label>
-          <input
-            type="text"
-            class="form-control"
-            name="denomination"
-            id="field_denomination"
-            data-cy="denomination"
-            formControlName="denomination"
-          />
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" jhiTranslate="sgpcApp.stockage.code" for="field_code">Code</label>
-          <input type="text" class="form-control" name="code" id="field_code" data-cy="code" formControlName="code" />
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" jhiTranslate="sgpcApp.stockage.quantite" for="field_quantite">Quantite</label>
-          <input type="text" class="form-control" name="quantite" id="field_quantite" data-cy="quantite" formControlName="quantite" />
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" jhiTranslate="sgpcApp.stockage.modifierPar" for="field_modifierPar">Modifier Par</label>
-          <input
-            type="text"
-            class="form-control"
-            name="modifierPar"
-            id="field_modifierPar"
-            data-cy="modifierPar"
-            formControlName="modifierPar"
-          />
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" jhiTranslate="sgpcApp.stockage.dateCreation" for="field_dateCreation">Date Creation</label>
-          <div class="d-flex">
-            <input
-              id="field_dateCreation"
-              data-cy="dateCreation"
-              type="datetime-local"
-              class="form-control"
-              name="dateCreation"
-              formControlName="dateCreation"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" jhiTranslate="sgpcApp.stockage.personne" for="field_personne">Personne</label>
-          <select
-            class="form-control"
-            id="field_personne"
-            data-cy="personne"
-            name="personne"
-            formControlName="personne"
-            [compareWith]="comparePersonne"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="personneOption" *ngFor="let personneOption of personnesSharedCollection">{{ personneOption.id }}</option>
-          </select>
-        </div>
-      </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
-        </button>
-
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
-        </button>
-      </div>
-    </form>
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+  <div class="modal-header">
+    <h2 id="jhi-stockage-heading">Nouveau stockage</h2>
   </div>
-</div>
+
+  <div class="modal-body">
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="form-group" *ngIf="editForm.controls.id.value !== null">
+      <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+      <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" jhiTranslate="sgpcApp.stockage.denomination" for="field_denomination">Denomination</label>
+      <input
+        type="text"
+        class="form-control"
+        name="denomination"
+        id="field_denomination"
+        data-cy="denomination"
+        formControlName="denomination"
+      />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" jhiTranslate="sgpcApp.stockage.quantite" for="field_quantite">Quantite</label>
+      <input type="text" class="form-control" name="quantite" id="field_quantite" data-cy="quantite" formControlName="quantite" />
+    </div>
+  </div>
+
+  <div class="modal-footer d-flex justify-content-end">
+    <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+      <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
+    </button>
+
+    <button
+      type="submit"
+      id="save-entity"
+      data-cy="entityCreateSaveButton"
+      [disabled]="editForm.invalid || isSaving"
+      class="btn btn-primary"
+    >
+      <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
+    </button>
+  </div>
+</form>

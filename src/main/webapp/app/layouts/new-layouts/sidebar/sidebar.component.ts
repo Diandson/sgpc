@@ -4,7 +4,7 @@ import { Router, NavigationEnd } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http';
 
-import { MENU, MENU_USER } from './menu';
+import { MENU, MENU_PROD, MENU_USER } from './menu';
 import { MenuItem } from './menu.model';
 import { TranslateService } from '@ngx-translate/core';
 import { EventService } from '../../../core/services/event.service';
@@ -152,8 +152,10 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
    * Initialize
    */
   initialize(): void {
-    if (this.accountService.hasAnyAuthority([this.auth.ADMIN])) {
+    if (this.accountService.hasAnyAuthority([this.auth.ADMIN, this.auth.CHEF])) {
       this.menuItems = MENU;
+    } else if (this.accountService.hasAnyAuthority([this.auth.PROD])) {
+      this.menuItems = MENU_PROD;
     } else {
       this.menuItems = MENU_USER;
     }

@@ -3,7 +3,7 @@
     "ETATPRODUCTION": {
       "null": "",
       "ATTENTE": "ATTENTE",
-      "EN_COURS": "EN_COURS",
+      "PRODUCTION": "PRODUCTION",
       "VALIDATION": "VALIDATION",
       "COURRIER": "COURRIER",
       "VERIFICATION": "VERIFICATION",

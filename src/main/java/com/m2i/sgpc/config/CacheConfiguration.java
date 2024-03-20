@@ -62,6 +62,7 @@ public class CacheConfiguration {
             createCache(cm, com.m2i.sgpc.domain.Email.class.getName());
             createCache(cm, com.m2i.sgpc.domain.Personne.class.getName() + ".producteurs");
             createCache(cm, com.m2i.sgpc.domain.Personne.class.getName() + ".receveurs");
+            createCache(cm, com.m2i.sgpc.domain.Colisage.class.getName() + ".productions");
             // jhipster-needle-ehcache-add-entry
         };
     }

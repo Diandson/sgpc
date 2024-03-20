@@ -13,6 +13,8 @@ import { IColisage } from '../colisage.model';
 import { ColisageService } from '../service/colisage.service';
 import { ColisageFormService, ColisageFormGroup } from './colisage-form.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { IProduction } from '../../production/production.model';
+import { ProductionService } from '../../production/service/production.service';
 
 @Component({
   standalone: true,
@@ -32,20 +34,19 @@ export class ColisageUpdateComponent implements OnInit {
     protected colisageService: ColisageService,
     protected colisageFormService: ColisageFormService,
     protected personneService: PersonneService,
+    protected productionService: ProductionService,
     protected activatedRoute: ActivatedRoute,
     protected activedModal: NgbActiveModal,
   ) {}
 
   comparePersonne = (o1: IPersonne | null, o2: IPersonne | null): boolean => this.personneService.comparePersonne(o1, o2);
+  productions: IProduction[] = [];
 
   ngOnInit(): void {
-    // this.activatedRoute.data.subscribe(({ colisage }) => {
-    //   this.colisage = colisage;
-    //   this.loadRelationshipsOptions();
-    // });
     if (this.colisage) {
       this.updateForm(this.colisage);
     }
+    this.productionService.query().subscribe(res => (this.productions = res.body ?? []));
   }
 
   previousState(): void {

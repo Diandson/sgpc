@@ -15,13 +15,13 @@
             class="is-parent"
             [ngClass]="{ 'has-arrow': !item.badge, 'has-dropdown': item.badge }"
           >
-            <i class="bx {{ item.icon }}" *ngIf="item.icon"></i>
+            <i class="fa {{ item.icon }}" *ngIf="item.icon"></i>
             <span> {{ item.label }}</span>
             <span class="badge rounded-pill float-end bg-{{ item.badge.variant }}" *ngIf="item.badge">{{ item.badge.text }}</span>
           </a>
 
           <a routerLink="{{ item.link }}" *ngIf="!hasItems(item)" class="side-nav-link-ref">
-            <i class="bx {{ item.icon }}" *ngIf="item.icon"></i>
+            <i class="fa {{ item.icon }}" *ngIf="item.icon"></i>
             <span> {{ item.label }}</span>
             <span class="badge rounded-pill bg-{{ item.badge.variant }} float-end" *ngIf="item.badge">{{ item.badge.text }}</span>
           </a>

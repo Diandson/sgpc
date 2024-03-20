@@ -309,7 +309,11 @@ class ColisageResourceIT {
         Colisage partialUpdatedColisage = new Colisage();
         partialUpdatedColisage.setId(colisage.getId());
 
-        partialUpdatedColisage.recuPar(UPDATED_RECU_PAR).estRecu(UPDATED_EST_RECU).dateCreation(UPDATED_DATE_CREATION);
+        partialUpdatedColisage
+            .destination(UPDATED_DESTINATION)
+            .canal(UPDATED_CANAL)
+            .recuPar(UPDATED_RECU_PAR)
+            .dateCreation(UPDATED_DATE_CREATION);
 
         restColisageMockMvc
             .perform(
@@ -323,10 +327,10 @@ class ColisageResourceIT {
         List<Colisage> colisageList = colisageRepository.findAll();
         assertThat(colisageList).hasSize(databaseSizeBeforeUpdate);
         Colisage testColisage = colisageList.get(colisageList.size() - 1);
-        assertThat(testColisage.getDestination()).isEqualTo(DEFAULT_DESTINATION);
-        assertThat(testColisage.getCanal()).isEqualTo(DEFAULT_CANAL);
+        assertThat(testColisage.getDestination()).isEqualTo(UPDATED_DESTINATION);
+        assertThat(testColisage.getCanal()).isEqualTo(UPDATED_CANAL);
         assertThat(testColisage.getRecuPar()).isEqualTo(UPDATED_RECU_PAR);
-        assertThat(testColisage.getEstRecu()).isEqualTo(UPDATED_EST_RECU);
+        assertThat(testColisage.getEstRecu()).isEqualTo(DEFAULT_EST_RECU);
         assertThat(testColisage.getDateCreation()).isEqualTo(UPDATED_DATE_CREATION);
     }
 

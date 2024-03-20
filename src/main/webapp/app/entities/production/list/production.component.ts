@@ -19,6 +19,8 @@ import { ProductionDeleteDialogComponent } from '../delete/production-delete-dia
 import { ProductionUpdateComponent } from '../update/production-update.component';
 import { Authority } from '../../../config/authority.constants';
 import HasAnyAuthorityDirective from '../../../shared/auth/has-any-authority.directive';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
   standalone: true,
@@ -35,6 +37,8 @@ import HasAnyAuthorityDirective from '../../../shared/auth/has-any-authority.dir
     FormatMediumDatePipe,
     ItemCountComponent,
     HasAnyAuthorityDirective,
+    NzIconModule,
+    NzTagModule,
   ],
 })
 export class ProductionComponent implements OnInit {

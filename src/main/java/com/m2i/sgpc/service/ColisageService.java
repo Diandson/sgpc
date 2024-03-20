@@ -1,9 +1,18 @@
 package com.m2i.sgpc.service;
 
 import com.m2i.sgpc.domain.Colisage;
+import com.m2i.sgpc.domain.Email;
+import com.m2i.sgpc.domain.Production;
+import com.m2i.sgpc.domain.enumeration.ETATPRODUCTION;
 import com.m2i.sgpc.repository.ColisageRepository;
+import com.m2i.sgpc.repository.EmailRepository;
+import com.m2i.sgpc.repository.PersonneRepository;
+import com.m2i.sgpc.repository.ProductionRepository;
+import com.m2i.sgpc.security.SecurityUtils;
 import com.m2i.sgpc.service.dto.ColisageDTO;
 import com.m2i.sgpc.service.mapper.ColisageMapper;
+import com.m2i.sgpc.service.mapper.ProductionMapper;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +34,32 @@ public class ColisageService {
 
     private final ColisageMapper colisageMapper;
 
-    public ColisageService(ColisageRepository colisageRepository, ColisageMapper colisageMapper) {
+    private final ProductionRepository productionRepository;
+
+    private final ProductionMapper productionMapper;
+
+    private final PersonneRepository personneRepository;
+
+    private final MailService mailService;
+
+    private final EmailRepository emailRepository;
+
+    public ColisageService(
+        ColisageRepository colisageRepository,
+        ColisageMapper colisageMapper,
+        ProductionRepository productionRepository,
+        ProductionMapper productionMapper,
+        PersonneRepository personneRepository,
+        MailService mailService,
+        EmailRepository emailRepository
+    ) {
         this.colisageRepository = colisageRepository;
         this.colisageMapper = colisageMapper;
+        this.productionRepository = productionRepository;
+        this.productionMapper = productionMapper;
+        this.personneRepository = personneRepository;
+        this.mailService = mailService;
+        this.emailRepository = emailRepository;
     }
 
     /**
@@ -39,7 +71,29 @@ public class ColisageService {
     public ColisageDTO save(ColisageDTO colisageDTO) {
         log.debug("Request to save Colisage : {}", colisageDTO);
         Colisage colisage = colisageMapper.toEntity(colisageDTO);
+        colisage.setDateCreation(ZonedDateTime.now());
+        colisage.setPersonne(personneRepository.findByUserLogin(SecurityUtils.getCurrentUserLogin().orElseThrow()));
         colisage = colisageRepository.save(colisage);
+        for (Production production : colisageDTO.getProductionList().stream().map(productionMapper::toEntity).toList()) {
+            production.setEtat(ETATPRODUCTION.VERIFICATION);
+            production.setColisage(colisage);
+            production = productionRepository.save(production);
+        }
+        Email email = new Email();
+        email.setColisage(colisage);
+        email.setContenu(
+            "Votre production à été finalisé et est en cours d'expédition par " +
+            colisage.getCanal() +
+            ". \n" +
+            " Dans l'attente d'une confirmation de reception, veuillez recevoir nos salutation les plus distinguées. \n" +
+            " Cordialement M2i-SA "
+        );
+        email.setDestinataire(colisage.getDestination());
+        email.setDateEnvoi(ZonedDateTime.now());
+        email.setObjet("Fin de production");
+        email.setPersonne(personneRepository.findByUserLogin(SecurityUtils.getCurrentUserLogin().orElseThrow()));
+        email = emailRepository.save(email);
+
         return colisageMapper.toDto(colisage);
     }
 

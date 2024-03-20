@@ -53,6 +53,11 @@ public class Colisage implements Serializable {
     )
     private Personne personne;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "colisage")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "personne", "producteur", "receveur", "colisage" }, allowSetters = true)
+    private Set<Production> productions = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -174,6 +179,37 @@ public class Colisage implements Serializable {
 
     public Colisage personne(Personne personne) {
         this.setPersonne(personne);
+        return this;
+    }
+
+    public Set<Production> getProductions() {
+        return this.productions;
+    }
+
+    public void setProductions(Set<Production> productions) {
+        if (this.productions != null) {
+            this.productions.forEach(i -> i.setColisage(null));
+        }
+        if (productions != null) {
+            productions.forEach(i -> i.setColisage(this));
+        }
+        this.productions = productions;
+    }
+
+    public Colisage productions(Set<Production> productions) {
+        this.setProductions(productions);
+        return this;
+    }
+
+    public Colisage addProduction(Production production) {
+        this.productions.add(production);
+        production.setColisage(this);
+        return this;
+    }
+
+    public Colisage removeProduction(Production production) {
+        this.productions.remove(production);
+        production.setColisage(null);
         return this;
     }
 

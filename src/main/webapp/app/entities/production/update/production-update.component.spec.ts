@@ -50,14 +50,14 @@ describe('Production Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Personne query and add missing value', () => {
       const production: IProduction = { id: 456 };
-      const personne: IPersonne = { id: 934 };
+      const personne: IPersonne = { id: 17513 };
       production.personne = personne;
-      const producteur: IPersonne = { id: 4076 };
+      const producteur: IPersonne = { id: 24628 };
       production.producteur = producteur;
-      const receveur: IPersonne = { id: 7187 };
+      const receveur: IPersonne = { id: 16764 };
       production.receveur = receveur;
 
-      const personneCollection: IPersonne[] = [{ id: 12704 }];
+      const personneCollection: IPersonne[] = [{ id: 7378 }];
       jest.spyOn(personneService, 'query').mockReturnValue(of(new HttpResponse({ body: personneCollection })));
       const additionalPersonnes = [personne, producteur, receveur];
       const expectedCollection: IPersonne[] = [...additionalPersonnes, ...personneCollection];
@@ -76,11 +76,11 @@ describe('Production Management Update Component', () => {
 
     it('Should update editForm', () => {
       const production: IProduction = { id: 456 };
-      const personne: IPersonne = { id: 5577 };
+      const personne: IPersonne = { id: 2862 };
       production.personne = personne;
-      const producteur: IPersonne = { id: 29474 };
+      const producteur: IPersonne = { id: 20968 };
       production.producteur = producteur;
-      const receveur: IPersonne = { id: 22802 };
+      const receveur: IPersonne = { id: 27623 };
       production.receveur = receveur;
 
       activatedRoute.data = of({ production });

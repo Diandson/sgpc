@@ -31,9 +31,13 @@ describe('Production Form Service', () => {
             dateValider: expect.any(Object),
             dateOuvert: expect.any(Object),
             dateCreation: expect.any(Object),
+            fichierControle: expect.any(Object),
+            fichierReception: expect.any(Object),
+            finished: expect.any(Object),
             personne: expect.any(Object),
             producteur: expect.any(Object),
             receveur: expect.any(Object),
+            colisage: expect.any(Object),
           }),
         );
       });
@@ -55,9 +59,13 @@ describe('Production Form Service', () => {
             dateValider: expect.any(Object),
             dateOuvert: expect.any(Object),
             dateCreation: expect.any(Object),
+            fichierControle: expect.any(Object),
+            fichierReception: expect.any(Object),
+            finished: expect.any(Object),
             personne: expect.any(Object),
             producteur: expect.any(Object),
             receveur: expect.any(Object),
+            colisage: expect.any(Object),
           }),
         );
       });

@@ -31,55 +31,21 @@
           <th scope="col" jhiSortBy="libelle">
             <div class="d-flex">
               <span jhiTranslate="sgpcApp.production.libelle">Libelle</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="fichier">
-            <div class="d-flex">
-              <span jhiTranslate="sgpcApp.production.fichier">Fichier</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="finish">
-            <div class="d-flex">
-              <span jhiTranslate="sgpcApp.production.finish">Finish</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="etat">
             <div class="d-flex">
               <span jhiTranslate="sgpcApp.production.etat">Etat</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="validerPar">
-            <div class="d-flex">
-              <span jhiTranslate="sgpcApp.production.validerPar">Valider Par</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="dateDepot">
             <div class="d-flex">
               <span jhiTranslate="sgpcApp.production.dateDepot">Date Depot</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="dateDebut">
-            <div class="d-flex">
-              <span jhiTranslate="sgpcApp.production.dateDebut">Date Debut</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="dateFin">
-            <div class="d-flex">
-              <span jhiTranslate="sgpcApp.production.dateFin">Date Fin</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="dateCreation">
             <div class="d-flex">
               <span jhiTranslate="sgpcApp.production.dateCreation">Date Creation</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col"></th>
@@ -89,22 +55,29 @@
         <tr *ngFor="let production of productions; trackBy: trackId" data-cy="entityTable">
           <td>{{ production.libelle }}</td>
           <td>
-            <a
-              *ngIf="production.fichier"
-              (click)="openFile(production.fichier, production.fichierContentType)"
-              jhiTranslate="entity.action.open"
-              >Ouvrir</a
-            >
-            <span *ngIf="production.fichier">{{ production.fichierContentType }}, {{ byteSize(production.fichier) }}</span>
+            <nz-tag nzColor="processing" *ngIf="production.etat === 'ATTENTE'">
+              <span nz-icon nzType="sync" nzSpin></span>
+              <span>{{ production.etat }}</span>
+            </nz-tag>
+            <nz-tag nzColor="geekblue" *ngIf="production.etat === 'PRODUCTION'">
+              <span nz-icon nzType="sync" nzSpin></span>
+              <span>{{ production.etat }}</span>
+            </nz-tag>
+            <nz-tag nzColor="cyan" *ngIf="production.etat === 'COURRIER'">
+              <span nz-icon nzType="sync" nzSpin></span>
+              <span>{{ production.etat }}</span>
+            </nz-tag>
+            <nz-tag nzColor="yellow" *ngIf="production.etat === 'VERIFICATION'">
+              <span nz-icon nzType="sync" nzSpin></span>
+              <span>{{ production.etat }}</span>
+            </nz-tag>
+            <nz-tag nzColor="success" *ngIf="production.etat === 'TERMINER'">
+              <span nz-icon nzType="check-circle" nzSpin></span>
+              <span>{{ production.etat }}</span>
+            </nz-tag>
           </td>
-          <td>{{ production.finish }}</td>
-          <td jhiTranslate="{{ 'sgpcApp.ETATPRODUCTION.' + production.etat }}">{{ production.etat }}</td>
-          <td>{{ production.validerPar }}</td>
           <td>{{ production.dateDepot | formatMediumDate }}</td>
-          <td>{{ production.dateDebut | formatMediumDate }}</td>
-          <td>{{ production.dateFin | formatMediumDate }}</td>
           <td>{{ production.dateCreation | formatMediumDatetime }}</td>
-
           <td class="text-end">
             <div class="btn-group">
               <a [routerLink]="['/production', production.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

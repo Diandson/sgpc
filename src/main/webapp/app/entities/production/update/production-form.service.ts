@@ -28,7 +28,7 @@ type ProductionFormRawValue = FormValueOf<IProduction>;
 
 type NewProductionFormRawValue = FormValueOf<NewProduction>;
 
-type ProductionFormDefaults = Pick<NewProduction, 'id' | 'finish' | 'dateValider' | 'dateCreation'>;
+type ProductionFormDefaults = Pick<NewProduction, 'id' | 'finish' | 'dateValider' | 'dateCreation' | 'finished'>;
 
 type ProductionFormGroupContent = {
   id: FormControl<ProductionFormRawValue['id'] | NewProduction['id']>;
@@ -44,9 +44,15 @@ type ProductionFormGroupContent = {
   dateValider: FormControl<ProductionFormRawValue['dateValider']>;
   dateOuvert: FormControl<ProductionFormRawValue['dateOuvert']>;
   dateCreation: FormControl<ProductionFormRawValue['dateCreation']>;
+  fichierControle: FormControl<ProductionFormRawValue['fichierControle']>;
+  fichierControleContentType: FormControl<ProductionFormRawValue['fichierControleContentType']>;
+  fichierReception: FormControl<ProductionFormRawValue['fichierReception']>;
+  fichierReceptionContentType: FormControl<ProductionFormRawValue['fichierReceptionContentType']>;
+  finished: FormControl<ProductionFormRawValue['finished']>;
   personne: FormControl<ProductionFormRawValue['personne']>;
   producteur: FormControl<ProductionFormRawValue['producteur']>;
   receveur: FormControl<ProductionFormRawValue['receveur']>;
+  colisage: FormControl<ProductionFormRawValue['colisage']>;
 };
 
 export type ProductionFormGroup = FormGroup<ProductionFormGroupContent>;
@@ -78,9 +84,15 @@ export class ProductionFormService {
       dateValider: new FormControl(productionRawValue.dateValider),
       dateOuvert: new FormControl(productionRawValue.dateOuvert),
       dateCreation: new FormControl(productionRawValue.dateCreation),
+      fichierControle: new FormControl(productionRawValue.fichierControle),
+      fichierControleContentType: new FormControl(productionRawValue.fichierControleContentType),
+      fichierReception: new FormControl(productionRawValue.fichierReception),
+      fichierReceptionContentType: new FormControl(productionRawValue.fichierReceptionContentType),
+      finished: new FormControl(productionRawValue.finished),
       personne: new FormControl(productionRawValue.personne),
       producteur: new FormControl(productionRawValue.producteur),
       receveur: new FormControl(productionRawValue.receveur),
+      colisage: new FormControl(productionRawValue.colisage),
     });
   }
 
@@ -106,6 +118,7 @@ export class ProductionFormService {
       finish: false,
       dateValider: currentTime,
       dateCreation: currentTime,
+      finished: false,
     };
   }
 

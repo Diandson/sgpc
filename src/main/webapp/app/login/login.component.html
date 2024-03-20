@@ -58,7 +58,7 @@
                     />
 
                     <button class="btn btn-light ms-0" type="button" id="password-addon" (click)="setPasseVisible()">
-                      <i [class]="password === 'password' ? 'mdi mdi-eye-outline' : 'mdi mdi-eye-off-outline'"></i>
+                      <i [class]="password === 'password' ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
                     </button>
                     <div *ngIf="submitted && f!.password.errors" class="invalid-feedback">
                       <span *ngIf="f!.password.errors!.required!">Password is required</span>

@@ -50,6 +50,21 @@
             <column name="date_creation" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
+            <column name="fichier_controle" type="${blobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="fichier_controle_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="fichier_reception" type="${blobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="fichier_reception_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="finished" type="boolean">
+                <constraints nullable="true" />
+            </column>
             <column name="personne_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -57,6 +72,9 @@
                 <constraints nullable="true" />
             </column>
             <column name="receveur_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="colisage_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -94,6 +112,11 @@
             <column name="date_valider" type="date"/>
             <column name="date_ouvert" type="date"/>
             <column name="date_creation" type="date"/>
+            <column name="fichier_controle" type="blob"/>
+            <column name="fichier_controle_content_type" type="string"/>
+            <column name="fichier_reception" type="blob"/>
+            <column name="fichier_reception_content_type" type="string"/>
+            <column name="finished" type="boolean"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

@@ -28,5 +28,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="personne"
                                  />
+
+        <addForeignKeyConstraint baseColumnNames="colisage_id"
+                                 baseTableName="production"
+                                 constraintName="fk_production__colisage_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="colisage"
+                                 />
     </changeSet>
 </databaseChangeLog>

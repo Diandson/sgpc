@@ -40,6 +40,14 @@
       "relationshipName": "personne",
       "relationshipSide": "right",
       "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "production",
+      "otherEntityRelationshipName": "colisage",
+      "relationshipName": "production",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     }
   ],
   "searchEngine": "no",

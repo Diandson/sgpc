@@ -28,6 +28,13 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IconDefinition } from '@ant-design/icons-angular';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+
+// Import what you need. RECOMMENDED. ✔️
+import { AccountBookFill, AlertFill, AlertOutline } from '@ant-design/icons-angular/icons';
+
+const icons: IconDefinition[] = [AccountBookFill, AlertOutline, AlertFill];
 
 @NgModule({
   imports: [
@@ -46,6 +53,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TooltipModule.forRoot(),
     ScrollToModule.forRoot(),
     ToastrModule.forRoot(),
+    NzIconModule.forRoot(icons),
   ],
   providers: [
     Title,

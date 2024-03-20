@@ -20,10 +20,13 @@ public interface EmailMapper extends EntityMapper<EmailDTO, Email> {
     @Named("colisageId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "canal", source = "canal")
     ColisageDTO toDtoColisageId(Colisage colisage);
 
     @Named("personneId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "nom", source = "nom")
+    @Mapping(target = "prenom", source = "prenom")
     PersonneDTO toDtoPersonneId(Personne personne);
 }

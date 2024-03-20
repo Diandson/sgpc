@@ -12,6 +12,7 @@ import { PersonneService } from 'app/entities/personne/service/personne.service'
 import { IStockage } from '../stockage.model';
 import { StockageService } from '../service/stockage.service';
 import { StockageFormService, StockageFormGroup } from './stockage-form.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   standalone: true,
@@ -32,23 +33,20 @@ export class StockageUpdateComponent implements OnInit {
     protected stockageFormService: StockageFormService,
     protected personneService: PersonneService,
     protected activatedRoute: ActivatedRoute,
+    protected activeModal: NgbActiveModal,
   ) {}
 
   comparePersonne = (o1: IPersonne | null, o2: IPersonne | null): boolean => this.personneService.comparePersonne(o1, o2);
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ stockage }) => {
-      this.stockage = stockage;
-      if (stockage) {
-        this.updateForm(stockage);
-      }
-
-      this.loadRelationshipsOptions();
-    });
+    if (this.stockage) {
+      this.updateForm(this.stockage);
+    }
   }
 
   previousState(): void {
-    window.history.back();
+    // window.history.back();
+    this.activeModal.dismiss();
   }
 
   save(): void {
@@ -69,7 +67,8 @@ export class StockageUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
-    this.previousState();
+    // this.previousState();
+    this.activeModal.close('success');
   }
 
   protected onSaveError(): void {
