@@ -86,14 +86,14 @@ public class ColisageService {
             colisage.getCanal() +
             ". \n" +
             " Dans l'attente d'une confirmation de reception, veuillez recevoir nos salutation les plus distinguées. \n" +
-            " Cordialement M2i-SA "
+            "\n Cordialement M2i-SA "
         );
         email.setDestinataire(colisage.getDestination());
         email.setDateEnvoi(ZonedDateTime.now());
         email.setObjet("Colis expedié");
         email.setPersonne(personneRepository.findByUserLogin(SecurityUtils.getCurrentUserLogin().orElseThrow()));
         email = emailRepository.save(email);
-        mailService.sendEmail(email.getDestinataire(), email.getObjet(), email.getContenu(), false, true);
+        mailService.sendEmail(email.getDestinataire(), email.getObjet(), email.getContenu(), false, false);
 
         return colisageMapper.toDto(colisage);
     }

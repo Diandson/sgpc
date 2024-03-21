@@ -88,7 +88,7 @@ public class ProductionService {
                 ". \n Le colisage vous sera transmis dans quelques jours." +
                 "\n \n Cordialement M2i-SA ",
                 false,
-                true
+                false
             );
         } else {
             Personne personne = personneRepository.findByUserLogin(SecurityUtils.getCurrentUserLogin().orElseThrow());
@@ -109,7 +109,7 @@ public class ProductionService {
                 " et est en cours..." +
                 "\n \n Cordialement M2i-SA ",
                 false,
-                true
+                false
             );
         }
 
@@ -125,8 +125,8 @@ public class ProductionService {
      */
     public Optional<ProductionDTO> partialUpdate(ProductionDTO productionDTO) {
         log.debug("Request to partially update Production : {}", productionDTO);
-
-        return productionRepository
+        Personne personne = personneRepository.findByUserLogin(SecurityUtils.getCurrentUserLogin().orElseThrow());
+        Optional<ProductionDTO> productionDTO1 = productionRepository
             .findById(productionDTO.getId())
             .map(existingProduction -> {
                 productionMapper.partialUpdate(existingProduction, productionDTO);
@@ -135,6 +135,27 @@ public class ProductionService {
             })
             .map(productionRepository::save)
             .map(productionMapper::toDto);
+        Production production = productionMapper.toEntity(productionDTO1.orElseThrow());
+
+        Personne destinataire = personneRepository.getReferenceById(production.getProducteur().getId());
+        User user = userRepository.getReferenceById(destinataire.getUser().getId());
+        mailService.sendEmail(
+            user.getEmail(),
+            "Reception validée",
+            "la reception de la production " +
+            production.getLibelle() +
+            " a été validé par " +
+            personne.getPrenom() +
+            " " +
+            personne.getNom() +
+            " le " +
+            LocalDate.now() +
+            "\n \n Cordialement ",
+            false,
+            false
+        );
+
+        return productionDTO1;
     }
 
     /**
