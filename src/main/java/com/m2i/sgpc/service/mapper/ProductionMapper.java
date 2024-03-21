@@ -24,6 +24,7 @@ public interface ProductionMapper extends EntityMapper<ProductionDTO, Production
     @Mapping(target = "id", source = "id")
     @Mapping(target = "nom", source = "nom")
     @Mapping(target = "prenom", source = "prenom")
+    @Mapping(target = "user", source = "user")
     PersonneDTO toDtoPersonneId(Personne personne);
 
     @Named("colisageId")

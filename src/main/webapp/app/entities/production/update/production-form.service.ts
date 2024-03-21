@@ -116,7 +116,6 @@ export class ProductionFormService {
     return {
       id: null,
       finish: false,
-      dateValider: currentTime,
       dateCreation: currentTime,
       finished: false,
     };

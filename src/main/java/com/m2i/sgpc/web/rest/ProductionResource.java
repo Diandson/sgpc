@@ -149,6 +149,12 @@ public class ProductionResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/courrier")
+    public List<ProductionDTO> getAllProductionsCourrier(@org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Productions");
+        return productionService.findAllCourrier();
+    }
+
     /**
      * {@code GET  /productions/:id} : get the "id" production.
      *

@@ -45,7 +45,7 @@ export class ProductionComponent implements OnInit {
   productions?: IProduction[];
   isLoading = false;
 
-  predicate = 'id';
+  predicate = 'dateCreation';
   ascending = true;
 
   itemsPerPage = ITEMS_PER_PAGE;
@@ -132,7 +132,7 @@ export class ProductionComponent implements OnInit {
     this.page = +(page ?? 1);
     const sort = (params.get(SORT) ?? data[DEFAULT_SORT_DATA]).split(',');
     this.predicate = sort[0];
-    this.ascending = sort[1] === ASC;
+    this.ascending = sort[1] === DESC;
   }
 
   protected onResponseSuccess(response: EntityArrayResponseType): void {

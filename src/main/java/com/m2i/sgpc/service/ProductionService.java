@@ -2,14 +2,17 @@ package com.m2i.sgpc.service;
 
 import com.m2i.sgpc.domain.Personne;
 import com.m2i.sgpc.domain.Production;
+import com.m2i.sgpc.domain.User;
 import com.m2i.sgpc.domain.enumeration.ETATPRODUCTION;
 import com.m2i.sgpc.repository.PersonneRepository;
 import com.m2i.sgpc.repository.ProductionRepository;
+import com.m2i.sgpc.repository.UserRepository;
 import com.m2i.sgpc.security.SecurityUtils;
 import com.m2i.sgpc.service.dto.ProductionDTO;
 import com.m2i.sgpc.service.mapper.ProductionMapper;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,12 +35,18 @@ public class ProductionService {
 
     private final ProductionMapper productionMapper;
 
+    private final MailService mailService;
+
     @Autowired
     private PersonneRepository personneRepository;
 
-    public ProductionService(ProductionRepository productionRepository, ProductionMapper productionMapper) {
+    @Autowired
+    private UserRepository userRepository;
+
+    public ProductionService(ProductionRepository productionRepository, ProductionMapper productionMapper, MailService mailService) {
         this.productionRepository = productionRepository;
         this.productionMapper = productionMapper;
+        this.mailService = mailService;
     }
 
     /**
@@ -69,11 +78,39 @@ public class ProductionService {
             production.setDateFin(LocalDate.now());
             production.setEtat(ETATPRODUCTION.COURRIER);
             production.setProducteur(personneRepository.findByUserLogin(SecurityUtils.getCurrentUserLogin().orElseThrow()));
+            Personne destinataire = personneRepository.getReferenceById(production.getPersonne().getId());
+            User user = userRepository.getReferenceById(destinataire.getUser().getId());
+            mailService.sendEmail(
+                user.getEmail(),
+                "Production terminée",
+                "Votre production a été terminée le " +
+                production.getDateFin() +
+                ". \n Le colisage vous sera transmis dans quelques jours." +
+                "\n \n Cordialement M2i-SA ",
+                false,
+                true
+            );
         } else {
             Personne personne = personneRepository.findByUserLogin(SecurityUtils.getCurrentUserLogin().orElseThrow());
             production.setValiderPar(personne.getPrenom() + " " + personne.getNom());
             production.setDateValider(ZonedDateTime.now());
             production.setEtat(ETATPRODUCTION.PRODUCTION);
+            Personne destinataire = personneRepository.getReferenceById(production.getPersonne().getId());
+            User user = userRepository.getReferenceById(destinataire.getUser().getId());
+            mailService.sendEmail(
+                user.getEmail(),
+                "Validation de la production",
+                "Votre production a été validé par " +
+                personne.getPrenom() +
+                " " +
+                personne.getNom() +
+                " le " +
+                production.getDateValider().toLocalDate() +
+                " et est en cours..." +
+                "\n \n Cordialement M2i-SA ",
+                false,
+                true
+            );
         }
 
         production = productionRepository.save(production);
@@ -132,5 +169,9 @@ public class ProductionService {
     public void delete(Long id) {
         log.debug("Request to delete Production : {}", id);
         productionRepository.deleteById(id);
+    }
+
+    public List<ProductionDTO> findAllCourrier() {
+        return productionRepository.findByEtat(ETATPRODUCTION.COURRIER).stream().map(productionMapper::toDto).toList();
     }
 }

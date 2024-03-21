@@ -46,7 +46,7 @@ export class ColisageUpdateComponent implements OnInit {
     if (this.colisage) {
       this.updateForm(this.colisage);
     }
-    this.productionService.query().subscribe(res => (this.productions = res.body ?? []));
+    this.productionService.queryToCourrier().subscribe(res => (this.productions = res.body ?? []));
   }
 
   previousState(): void {

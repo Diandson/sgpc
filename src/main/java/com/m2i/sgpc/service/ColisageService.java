@@ -90,9 +90,10 @@ public class ColisageService {
         );
         email.setDestinataire(colisage.getDestination());
         email.setDateEnvoi(ZonedDateTime.now());
-        email.setObjet("Fin de production");
+        email.setObjet("Colis expedié");
         email.setPersonne(personneRepository.findByUserLogin(SecurityUtils.getCurrentUserLogin().orElseThrow()));
         email = emailRepository.save(email);
+        mailService.sendEmail(email.getDestinataire(), email.getObjet(), email.getContenu(), false, true);
 
         return colisageMapper.toDto(colisage);
     }
